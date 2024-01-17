@@ -44,4 +44,24 @@ class User_create(APIView,):
                 return Response({'message': 'Successful'}, status=status.HTTP_201_CREATED)
 
         return Response(User_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def put(self,request):
+        data=request.data
+        try:
+            user_to_be_updated = CustomBaseuser.objects.get(email=data['email'])
+            try:     
+                data['email'],data['firstname'],data['lastname'],data['birth_date'],
+                data['phone_number'],data['profile_pic']
+                user_to_be_updated.email=data['email']
+                user_to_be_updated.firstname=data['firstname']
+                user_to_be_updated.lastname=data['lastname']
+                user_to_be_updated.birth_date=data['birth_date']
+                user_to_be_updated.phone_number=data['phone_number']
+                user_to_be_updated.profile_pic=data['profile_pic']
+                user_to_be_updated.save()
+                return Response({'message':'Updated'})
+            except:
+                return Response({'message':'Check your data'})
+        except:
+            return Response({'message':'Please sign_up as a user'})
 

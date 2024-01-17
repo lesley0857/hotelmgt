@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "Customeruser",
     'roomapp',
     'guestpreferenceapp',
+    'reservation',
 ]
 
 MIDDLEWARE = [

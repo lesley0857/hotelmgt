@@ -22,12 +22,11 @@ urlpatterns = [
     path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('admin/', admin.site.urls),
 
-    path('api/register_user/', User_create.as_view(), name='user_create'),
+    path('api/registerandupdate_user/', User_create.as_view(), name='user_create'),
 
     path('api/listroom/', Listroom.as_view(), name='listroom'),
 
-    path('api/createpreference/', PreferenceView.as_view(), name='PreferenceView'), 
-    path('api/updatepreference/', PreferenceView.as_view(), name='updatepreference'),
+    path('api/preference/', PreferenceView.as_view(), name='PreferenceView'), 
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,12 +1,6 @@
 from .models import RoomModel,RoomfileModel
 from rest_framework import serializers
 
-
-class Room_list_file_serializer(serializers.ModelSerializer):
-    class Meta:
-        model = RoomfileModel
-        fields = ['roommodel','file']
-
 class Room_list_serializer(serializers.ModelSerializer):
     files=serializers.SerializerMethodField('get_files')
     class Meta:
