@@ -8,10 +8,9 @@ from Customeruser.models import CustomBaseuser
 # Create your views here.
 
 class PreferenceView(APIView):
-    def get(self,request):
-        data = request.data
+    def get(self,request,email):
         try:
-            userpreference = Preferencemodel.objects.get(user__email=data['email'])
+            userpreference = Preferencemodel.objects.get(user__email=email)
             if userpreference:
                 serialized_userpreference = Preferenceserializer(instance=userpreference)
                 return Response({'message':serialized_userpreference.data})
@@ -31,7 +30,7 @@ class PreferenceView(APIView):
         except:
             try:
                     user=CustomBaseuser.objects.get(email=data['email'])
-                    Preferencemodel.objects.create(user_id=user.id,
+                    Preferencemodel.objects.create(user_id=user.pk,
                                                    lighting=data['lighting'],
                                                    bedspread=data['bedspread'],
                                                    heater=data['heater'],

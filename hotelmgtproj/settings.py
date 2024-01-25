@@ -47,10 +47,12 @@ INSTALLED_APPS = [
     'django_celery_results',
     'django_celery_beat',
 
+    "checkout",
     "Customeruser",
     'roomapp',
     'guestpreferenceapp',
     'reservation',
+    'Payment',
 ]
 
 MIDDLEWARE = [
