@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/ash
 # until cd /app/
 # do
 #     echo "Waiting for server volume..."
