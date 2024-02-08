@@ -1,48 +1,50 @@
-version: '3.8'
+# version: '3.8'
 
-services:
+# services:
 
-  redis:
-    restart: unless-stopped
-    image: "redis:7.0.11-alpine"
-    expose:
-      - 6379
+#   redis:
+#     restart: unless-stopped
+#     image: "redis:7.0.11-alpine"
+#     expose:
+#       - 6379
 
-  django_app:
-    build:
-      context: .
-    entrypoint: /app/entrypoint.sh
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./staticfiles:/app/staticfiles
-    env_file:
-      - .env
-    environment:
-      - "CELERY_BROKER_URL=redis://redis:6379/0"
-    depends_on:
-      - redis
+#   django_app:
+#     build:
+#       context: .
+#     entrypoint: /app/entrypoint.sh
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./staticfiles:/app/staticfiles
+#     env_file:
+#       - .env
+#     environment:
+#       - "CELERY_BROKER_URL=redis://redis:6379/0"
+#     depends_on:
+#       - redis
 
-  nginx:
-    build: ./Nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./staticfiles:/app/staticfiles
-    depends_on:
-      - django_app
+#   nginx:
+#     build: ./Nginx
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - ./staticfiles:/app/staticfiles
+#     depends_on:
+#       - django_app
 
-  celery_app:
-    container_name: hotelmgtcelery
-    build:
-      context: .
-    entrypoint: /app/worker_entrypoint.sh
-    command: celery --app=hotelmgtproj worker --pool=solo -l INFO
-    env_file:
-      - .env
-    depends_on:
-      - redis
-      - django_app
+#   celery_app:
+#     container_name: hotelmgtcelery
+#     build:
+#       context: .
+#     entrypoint: /app/worker_entrypoint.sh
+#     command: celery --app=hotelmgtproj worker --pool=solo -l INFO
+#     env_file:
+#       - .env
+#     depends_on:
+#       - redis
+#       - django_app
 
-volumes:
-  static: #celery -A Ryvm_project.celeryapp worker --pool=solo -l INFO
+# volumes:
+#   static: #celery -A Ryvm_project.celeryapp worker --pool=solo -l INFO
+
+
