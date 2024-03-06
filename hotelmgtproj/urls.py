@@ -27,9 +27,18 @@ urlpatterns = [
     path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('admin/', admin.site.urls),
 
-    path('api/registerandupdate_user/', User_create.as_view(), name='user_create'),
+    path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('profile/', profile_view, name='profile'),
+    path('preference/', preference_view, name='preference'),
+    path('signup/', preference_view, name='signup'),
+    path('', home_view, name='home'),
 
-    path('api/listroom/', Listroom.as_view(), name='listroom'),
+
+
+
+    path('api/registerandupdate_user/', User_create.as_view(), name='user_create'),
+    # path('api/listroom/', Listroom.as_view(), name='listroom'),
 
     path('api/preference/', PreferenceView.as_view(), name='PreferenceView'), 
     path('api/preference/<str:email>/', PreferenceView.as_view(), name='getpreference'), 
