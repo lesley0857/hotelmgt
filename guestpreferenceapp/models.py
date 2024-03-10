@@ -10,7 +10,7 @@ class Preferencemodel(models.Model):
                         ('Coverlets,Blankets,Throwers,3-Pillows','Coverlets,Blankets,Throwers,3-Pillows'),
                         ('Coverlets,Blankets,2-Pillows','Coverlets,Blankets,2-Pillows'),
                         ('Coverlets,Throwers,3-Pillows','Coverlets,Throwers,3-Pillows'),)
-    
+    Boolean_choice = (('True','on'),('False','off'))
     user=models.OneToOneField(CustomBaseuser,on_delete=models.CASCADE)
     lighting=models.CharField(max_length=400, choices=LIGHT_CHOICE, default='STATUS[0]', blank=False, null=True)
     bedspread = models.CharField(max_length=400, choices=BEDSPREAD_CHOICE, default='STATUS[0]', blank=False, null=True)

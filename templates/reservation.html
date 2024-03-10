@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="card mb-4">
+        <div class="card-body p-md-5 mx-md-4 ">
+            <form method="POST" action="{% url 'preference' %}">
+                {% csrf_token %}
+                <p>Make a reservation</p>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="checkInDateandTime">Lighting</label>
+                    <input type="datetime">
+                </div>
+
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="preference">preference</label>
+                    <select class="form-control form-control-sm" id="preference" name="preference">
+                        <option>{{preference}}</option>
+                    </select>
+                </div>
+
+                <div class="form-outline mb-4" class="form-check">
+                    <label class="form-label" for="heater">Heater</label>
+                    <select class="form-control form-control-sm" id="heater" name="heater">
+                        <option>True</option>
+                        <option>False</option>
+                    </select>
+                </div>
+
+                <div class="form-outline mb-4" class="form-check">
+                    <label class="form-label" for="airconditioner">Air Conditioner</label>
+                    <select class="form-control form-control-sm" id="airconditioner" name="airconditioner">
+                        <option>True</option>
+                        <option>False</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Create Preference
+                </button>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>

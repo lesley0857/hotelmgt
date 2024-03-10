@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{% static '/css/home.css' %}">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <section style="background-color: #eee;">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col">
+                    <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                        <ol class="breadcrumb mb-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">User</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">User Profile</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            {% for room in free_rooms %}
+            <div class="gradient">
+                <div class="wrap">
+                    <div class="card">
+                        <a href="#">
+                            <div class="price">{{room.price}}<span class="glyphicon glyphicon-eur"
+                                    aria-hidden="true"></span>
+                                /
+                                day</div>
+                            <img src={{room.profile_pic.url}} class="image">
+                            <div class="description">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <h4>{{room.roomname}}</h4>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <ul>
+                                            <li><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                                <p>{{room.persons}} person(s)</p>
+                                            </li>
+                                            <li><span class="glyphicon glyphicon-signal" aria-hidden="true"></span>
+                                                <p>
+                                                    {% if room.wifi == True %}
+                                                    Free Wifi
+                                                    {%else%}
+                                                    No Wifi
+                                                    {% endif %}
+
+                                                </p>
+                                            </li>
+                                            <li>
+                                                {% if room.wifi == True %}
+                                                <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+                                                <p>Kitchen</p>
+                                                {%else%}
+                                                {% endif %}
+
+
+                                            </li>
+                                            <li>
+                                                {% if room.wifi == True %}
+                                                <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+                                                <p>Bathroom</p>
+                                                {%else%}
+                                                {% endif %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</body>
+
+</html>

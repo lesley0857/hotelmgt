@@ -11,6 +11,49 @@ from .models import ReservationModel,ReservedRooms
 from .serializer import Reservation_list_serializer
 from Payment.models import PaymentModel
 
+def reservation(request):
+    basic_user = request.user
+    user = CustomBaseuser.objects.filter(email=basic_user.email)
+    free_rooms = RoomModel.objects.filter(status='Free')
+    preference = Preferencemodel.objects.filter(user=user.first())
+    if request.method=='POST':
+        try:
+            user = CustomBaseuser.objects.get(email=basic_user.email)
+            preference = Preferencemodel.objects.get(user=user)
+            payment=PaymentModel.objects.create(user=user,
+                                    lastName=request.POST.get('lastname'),
+                                    firstName=request.POST.get('firstname'),
+                                    reference_id=request.POST.get('reference_id'),
+                                    amount=request.POST.get('amount'),
+                                    description=request.POST.get('description'),
+                                    paymenttime = request.POST.get('paymenttime'))
+            try:
+                reservation = ReservationModel.objects.create(
+                                                    user=user,
+                                                        checkInDateandTime= request.POST.get('checkInDateandTime'),
+                                                        preference_id = preference.pk,
+                                                        payment=payment
+                    )
+                print(reservation)
+                for room in request.POST.get('rooms'):
+                    print(room)
+                    room_model=RoomModel.objects.get(roomname=room['room'])
+                    print(room_model)
+                    reserved_rooms = ReservedRooms.objects.create(reservedroom=reservation,
+                                                              room = room_model
+                                                              )
+                    print(reserved_rooms.room.status)
+                    a=RoomModel.objects.get(roomname=reserved_rooms)
+                    a.status='Occupied'
+                    a.save()
+            except:
+                print('op')
+        except:
+            print('p')
+    context={'free_rooms':free_rooms,
+             'preference':preference.first()}
+    return render(request, 'reservation.html', context)
+
 class ReservationView(APIView):
     def get(self,request,email):
         try:

@@ -29,15 +29,10 @@
                 <div class="col-lg-4">
                     <div class="card mb-4">
                         <div class="card-body text-center">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-                                alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                            <h5 class="my-3">John Smith</h5>
-                            <p class="text-muted mb-1">Full Stack Developer</p>
-                            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p>
-                            <div class="d-flex justify-content-center mb-2">
-                                <button type="button" class="btn btn-primary">Follow</button>
-                                <button type="button" class="btn btn-outline-primary ms-1">Message</button>
-                            </div>
+                            <img src={{details.profile_pic.url}} alt="avatar" class="rounded-circle img-fluid"
+                                style="width: 150px;">
+                            <h5 class="my-3">{{details.firstname}} {{details.lastname}}</h5>
+
                         </div>
                     </div>
 
@@ -50,7 +45,7 @@
                                     <p class="mb-0">Full Name</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">Johnatan Smith</p>
+                                    <p class="text-muted mb-0">{{details.firstname}} {{details.lastname}}</p>
                                 </div>
                             </div>
                             <hr>
@@ -59,7 +54,7 @@
                                     <p class="mb-0">Email</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">example@example.com</p>
+                                    <p class="text-muted mb-0">{{details.email}}</p>
                                 </div>
                             </div>
                             <hr>
@@ -68,27 +63,20 @@
                                     <p class="mb-0">Phone</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">(097) 234-5678</p>
+                                    <p class="text-muted mb-0">{{details.phone_number}}</p>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <p class="mb-0">Mobile</p>
+                                    <p class="mb-0">D.O.B</p>
                                 </div>
                                 <div class="col-sm-9">
-                                    <p class="text-muted mb-0">(098) 765-4321</p>
+                                    <p class="text-muted mb-0">{{details.birth_date}}</p>
                                 </div>
                             </div>
                             <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <p class="mb-0">Address</p>
-                                </div>
-                                <div class="col-sm-9">
-                                    <p class="text-muted mb-0">Bay Area, San Francisco, CA</p>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -96,39 +84,59 @@
                 <div class="col-lg-8">
                     <div class="card mb-4">
                         <div class="card-body p-md-5 mx-md-4 ">
-                            <form method="POST" action="">
+                            <form method="POST" action="{% url 'preference' %}">
                                 {% csrf_token %}
+                                <p>Create Your Room Preference</p>
+
 
                                 <div class="form-outline mb-4">
-                                    {{form.email}}
-                                    <label class="form-label" for="email">Email</label>
-                                </div>
-                                <div class="form-outline mb-4">
-                                    <input type="password" id="password" class="form-control" name="password" />
-                                    <label class="form-label" for="email">password</label>
-                                </div>
-                                <div class="form-outline mb-4">
-                                    {{form.firstname}}
-                                    <label class="form-label" for="email">firstname</label>
+                                    <label class="form-label" for="email">Lighting</label>
+                                    <select class="form-control form-control-sm" id="Lighting" name="Lighting">
+                                        <option>Chandelier</option>
+                                        <option>Pendant Light</option>
+                                        <option>Track Light</option>
+                                        <option>Cabinet Light</option>
+                                        <option>Ceiling Light</option>
+                                    </select>
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    {{form.lastname}}
-                                    <label class="form-label" for="password">lastname</label>
+                                    <label class="form-label" for="email">Bedspread</label>
+                                    <select class="form-control form-control-sm" id="Bedspread" name="Bedspread">
+                                        <option>Quilts,Coverlets,Blankets,Throwers,3-Pillows</option>
+                                        <option>Coverlets,Blankets,Throwers,3-Pillows</option>
+                                        <option>Coverlets,Blankets,2-Pillows</option>
+                                        <option>Coverlets,Throwers,3-Pillows</option>
+                                    </select>
                                 </div>
 
-                                <div class="text-center pt-1 mb-5 pb-1">
-                                    <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                        type="submit">Update</button>
+                                <div class="form-outline mb-4" class="form-check">
+                                    <label class="form-label" for="heater">Heater</label>
+                                    <select class="form-control form-control-sm" id="heater" name="heater">
+                                        <option>True</option>
+                                        <option>False</option>
+                                    </select>
                                 </div>
 
+                                <div class="form-outline mb-4" class="form-check">
+                                    <label class="form-label" for="airconditioner">Air Conditioner</label>
+                                    <select class="form-control form-control-sm" id="airconditioner"
+                                        name="airconditioner">
+                                        <option>True</option>
+                                        <option>False</option>
+                                    </select>
+                                </div>
 
-
+                                <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                    type="submit">Create Preference
+                                </button>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 </body>

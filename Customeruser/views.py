@@ -21,45 +21,36 @@ from .models import *
 from .serializer import *
 from .tasks import *
 from .form import create_customer,update_customer
+from roomapp.models import *
 
 def home_view(request):
-    
-    context={}
+    free_rooms =RoomModel.objects.filter(status='Free')
+    context={'free_rooms':free_rooms}
     return render(request, 'home.html', context)
 
-def preference_view(request):
-    
-    context={}
-    return render(request, 'preference.html', context)
 
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
-    print(type(userr))
     form = create_customer(request.POST,instance=userr)
-    print(request.user.email)
     if request.method == "POST":
         pwd=request.POST.get('password')
-        print(request.POST)
         form = update_customer(request.POST,instance=userr)
-        print(form.is_valid())
         if form.is_valid():
             userr.set_password(pwd)
             form.save(commit=True)
-    context={'form': form}
+    context={'form': form,'details':request.user}
     return render(request, 'Profile.html', context)
 
 #@authenticate_user
 def signup_view(request):
     form = create_customer(request.POST)
     if request.method=="POST":
-        form = create_customer(request.POST)
-        print(form.is_valid())
-        if form.is_valid():
-            form.save()
-            user = form.save()
-            print(user.email)
-            return redirect('login')
-    context = {'form': form}
+        CustomBaseuser.objects.create_user(request.POST.get('email'),
+                                         request.POST.get('firstname'),
+                                         request.POST.get('lastname'),
+                                         request.POST.get('password'))
+        return redirect('login')
+    context = {'form':form}
     return render(request, 'signup.html', context)
 
 def login_view(request):
@@ -67,12 +58,10 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, email=email, password=password)
-        if user is not None: 
-            print('okl')
+        if user != None: 
             login(request, user)
             return redirect('home')
         else:
-            print("kool")
             messages.info(request, "Username OR Password is incorrect") #you dont need to pass through context
     context = {}
     return render(request, 'login.html', context)

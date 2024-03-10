@@ -7,6 +7,33 @@ from .serializer import Preferenceserializer
 from Customeruser.models import CustomBaseuser
 # Create your views here.
 
+def http_preference(request):
+    print(request.user.firstname)
+    if request.method == "POST":
+        print(request.POST)
+        userr = CustomBaseuser.objects.get(email=request.user.email)
+        try:
+            preference = Preferencemodel.objects.get(user=userr)
+            
+            preference.lighting=request.POST.get('lighting')
+            preference.bedspread=request.POST.get('bedspread')
+            preference.heater=request.POST.get('heater')
+            preference.airconditioner=request.POST.get('airconditioner')
+
+            preference.save()
+        except:
+            userpreference = Preferencemodel.objects.create(
+                user=userr,
+                lighting=request.POST.get('lighting'),
+                bedspread=request.POST.get('bedspread'),
+                heater=request.POST.get('heater'),
+                airconditioner=request.POST.get('airconditioner')
+            )
+            print(userpreference)
+    context={'details':request.user}
+    return render(request, 'preference.html', context)
+
+
 class PreferenceView(APIView):
     def get(self,request,email):
         try:

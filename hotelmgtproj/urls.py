@@ -19,6 +19,7 @@ from reservation.admin import ReservationModelAdmin
 from checkout.views import *
 
 
+
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -30,8 +31,9 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('profile/', profile_view, name='profile'),
-    path('preference/', preference_view, name='preference'),
-    path('signup/', preference_view, name='signup'),
+    path('preference/', http_preference, name='preference'),
+    path('reservation/', reservation, name='reservation'),
+    path('signup/', signup_view, name='signup'),
     path('', home_view, name='home'),
 
 
