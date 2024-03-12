@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializer import Preferenceserializer
 from Customeruser.models import CustomBaseuser
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+@login_required(login_url='login')
 def http_preference(request):
     print(request.user.firstname)
     if request.method == "POST":

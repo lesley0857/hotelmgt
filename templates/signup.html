@@ -13,6 +13,54 @@
 <body>
     <section class="h-100 gradient-form" style="background-color: #eee;">
         <div class="container py-5 h-100">
+            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="mynavbar">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                            </li>
+                            {% if request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                            </li>
+                            {%else%}
+
+                            {%endif%}
+                            {% if request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'preference' %}">Preference</a>
+                            </li>
+                            {%endif%}
+                            {% if request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
+                            </li>
+                            {%endif%}
+                            {% if not request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                            </li>
+                            {%endif%}
+                            {% if not request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%url 'login' %}">Login</a>
+                            </li>
+                            {%endif%}
+                            {% if request.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%url 'logout' %}">Logout</a>
+                            </li>
+                            {%endif%}
+                        </ul>
+
+                    </div>
+                </div>
+            </nav>
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-xl-10">
                     <div class="card rounded-3 text-black">
@@ -62,7 +110,8 @@
                                     </form>
                                     <div class="d-flex align-items-center justify-content-center pb-4">
                                         <p class="mb-0 me-2">Already have an account?</p>
-                                        <button type="button" class="btn btn-outline-danger">Log In</button>
+                                        <a href="{% url 'login' %}"><button type="button"
+                                                class="btn btn-outline-danger">Log In</button></a>
                                     </div>
 
                                 </div>

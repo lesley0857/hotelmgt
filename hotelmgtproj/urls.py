@@ -32,6 +32,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', profile_view, name='profile'),
     path('preference/', http_preference, name='preference'),
+    path('payment/', payment, name='payment'),
     path('reservation/', reservation, name='reservation'),
     path('signup/', signup_view, name='signup'),
     path('', home_view, name='home'),

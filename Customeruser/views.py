@@ -17,6 +17,7 @@ from django.contrib import messages
 from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from .decorators import authenticate_user
 from .models import *
 from .serializer import *
 from .tasks import *
@@ -28,7 +29,7 @@ def home_view(request):
     context={'free_rooms':free_rooms}
     return render(request, 'home.html', context)
 
-
+@login_required(login_url='login')
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
     form = create_customer(request.POST,instance=userr)
@@ -41,7 +42,7 @@ def profile_view(request):
     context={'form': form,'details':request.user}
     return render(request, 'Profile.html', context)
 
-#@authenticate_user
+@authenticate_user
 def signup_view(request):
     form = create_customer(request.POST)
     if request.method=="POST":
@@ -50,9 +51,10 @@ def signup_view(request):
                                          request.POST.get('lastname'),
                                          request.POST.get('password'))
         return redirect('login')
-    context = {'form':form}
+    context = {'form':form,'None':''}
     return render(request, 'signup.html', context)
 
+@authenticate_user
 def login_view(request):
     if request.method == "POST":
         email = request.POST.get('email')

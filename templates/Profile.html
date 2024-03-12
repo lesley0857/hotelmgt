@@ -14,12 +14,52 @@
     <div class="container py-5">
         <div class="row">
             <div class="col">
-                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">User</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">User Profile</li>
-                    </ol>
+                <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#mynavbar">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mynavbar">
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                </li>
+                                {% if request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+                                </li>
+                                {%endif%}
+                                {% if request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'preference' %}">Preference</a>
+                                </li>
+                                {%endif%}
+                                {% if request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
+                                </li>
+                                {%endif%}
+                                {% if not request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                                </li>
+                                {%endif%}
+                                {% if not request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{%url 'login' %}">Login</a>
+                                </li>
+                                {%endif%}
+                                {% if request.user %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{%url 'logout' %}">Logout</a>
+                                </li>
+                                {%endif%}
+                            </ul>
+
+                        </div>
+                    </div>
                 </nav>
             </div>
         </div>
