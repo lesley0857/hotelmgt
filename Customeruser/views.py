@@ -26,7 +26,7 @@ from roomapp.models import *
 
 def home_view(request):
     free_rooms =RoomModel.objects.filter(status='Free')
-    context={'free_rooms':free_rooms}
+    context={'free_rooms':free_rooms, 'request':request}
     return render(request, 'home.html', context)
 
 @login_required(login_url='login')
