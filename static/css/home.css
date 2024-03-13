@@ -1,5 +1,5 @@
 .gradient {
-    height: 100vh;
+    height: 70vh;
     background-color: grey;
     background-image: radial-gradient(ellipse closest-side, #fff, #ccc);
 }

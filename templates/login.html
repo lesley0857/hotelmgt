@@ -22,36 +22,34 @@
                     <div class="collapse navbar-collapse" id="mynavbar">
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                <a class="nav-link" href="{% url 'home' %}">HOTEL</a>
                             </li>
-                            {% if request.user %}
+                            {% if request.user == True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                             </li>
-                            {%else%}
-
                             {%endif%}
-                            {% if request.user %}
+                            {% if request.user == True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'preference' %}">Preference</a>
                             </li>
                             {%endif%}
-                            {% if request.user %}
+                            {% if request.user == True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
                             </li>
                             {%endif%}
-                            {% if not request.user %}
+                            {% if request.user != True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'signup' %}">Signup</a>
                             </li>
                             {%endif%}
-                            {% if not request.user %}
+                            {% if request.user != True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{%url 'login' %}">Login</a>
                             </li>
                             {%endif%}
-                            {% if request.user %}
+                            {% if request.user == True %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{%url 'logout' %}">Logout</a>
                             </li>
@@ -81,7 +79,7 @@
                                         <div class="form-outline mb-4">
                                             <input type="email" id="email" class="form-control" name="email"
                                                 placeholder="Phone number or email address" />
-                                            <label class="form-label" for="email">Username</label>
+                                            <label class="form-label" for="email">Email</label>
                                         </div>
 
                                         <div class="form-outline mb-4">

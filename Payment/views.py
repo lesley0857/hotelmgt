@@ -26,7 +26,7 @@ def payment(request):
                                     amount = '300',
                                     description='for 3 rooms',
                                     paymenttime=request.POST.get('paymenttime'))
-        return redirect('reservation')
+        # return redirect('reservation')
     context = {}
     return render(request, 'payment.html', context)
 

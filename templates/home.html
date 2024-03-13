@@ -28,34 +28,34 @@
                         <div class="collapse navbar-collapse" id="mynavbar">
                             <ul class="navbar-nav me-auto">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'home' %}">Home</a>
+                                    <a class="nav-link" href="{% url 'home' %}">HOTEL</a>
                                 </li>
-                                {% if request.user %}
+                                {% if request.user == True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'profile' %}">Profile</a>
                                 </li>
                                 {%endif%}
-                                {% if request.user %}
+                                {% if request.user == True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'preference' %}">Preference</a>
                                 </li>
                                 {%endif%}
-                                {% if request.user %}
+                                {% if request.user == True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
                                 </li>
                                 {%endif%}
-                                {% if not request.user %}
+                                {% if request.user != True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{% url 'signup' %}">Signup</a>
                                 </li>
                                 {%endif%}
-                                {% if not request.user %}
+                                {% if request.user != True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{%url 'login' %}">Login</a>
                                 </li>
                                 {%endif%}
-                                {% if request.user %}
+                                {% if request.user == True %}
                                 <li class="nav-item">
                                     <a class="nav-link" href="{%url 'logout' %}">Logout</a>
                                 </li>
