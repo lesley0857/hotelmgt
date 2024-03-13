@@ -32,12 +32,15 @@ def home_view(request):
 @login_required(login_url='login')
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
-    form = create_customer(request.POST,instance=userr)
+    form = update_customer(request.POST,instance=userr)
     if request.method == "POST":
         pwd=request.POST.get('password')
         form = update_customer(request.POST,instance=userr)
         if form.is_valid():
+            print('valid')
+            print(form.cleaned_data.get('profile_pic'))
             userr.set_password(pwd)
+            userr.profile_pic = form.cleaned_data.get('profile_pic')
             form.save(commit=True)
     context={'form': form,'details':request.user}
     return render(request, 'Profile.html', context)

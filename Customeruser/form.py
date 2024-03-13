@@ -8,9 +8,13 @@ class update_customer(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
     firstname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))    
     lastname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))    
+    birth_date = forms.CharField(widget=forms.DateInput(attrs={'class': 'form-control'}))    
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))    
+    # profile_pic = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}))    
+
     class Meta:
         model = CustomBaseuser
-        fields =['email','firstname','lastname']
+        fields =['email','firstname','lastname','birth_date','phone_number','profile_pic']
         
 
 class create_customer(forms.ModelForm):
