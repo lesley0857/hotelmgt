@@ -28,7 +28,7 @@ urlpatterns = [
     path('api/token/blacklist/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('admin/', admin.site.urls),
 
-    path("__debug__/", include("debug_toolbar.urls")),
+    
 
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
