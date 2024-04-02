@@ -32,7 +32,7 @@ def http_preference(request):
             )
             print(userpreference)
     context={'details':request.user}
-    return render(request, 'preference.html', context)
+    return render(request, 'reservation.html', context)
 
 
 class PreferenceView(APIView):

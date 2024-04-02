@@ -8,6 +8,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <meta charset="UTF-8">
     <title>Profile Update</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </head>
 
 <section style="background-color: #eee;">
@@ -145,9 +146,24 @@
                             </div>
 
                             <div class="form-outline mb-4">
-                                {{form.birth_date}}
+                                <input type="date" name="birth_date" id="birth_date">
                                 <label class="form-label" for="birth_date">Birth_date</label>
                             </div>
+                            <script type="text/javascript">
+                                $(function () {
+                                    var dtToday = new Date();
+
+                                    var month = dtToday.getMonth() + 1;
+                                    var day = dtToday.getDate();
+                                    var year = dtToday.getFullYear();
+                                    if (month < 10)
+                                        month = '0' + month.toString();
+                                    if (day < 10)
+                                        day = '0' + day.toString();
+                                    var maxDate = year + '-' + month + '-' + day;
+                                    $('#birth_date').attr('min', maxDate);
+                                });
+                            </script>
 
                             <div class="form-outline mb-4">
                                 {{form.phone_number}}
@@ -155,8 +171,12 @@
                             </div>
 
                             <div class="form-outline mb-4">
-                                {{form.profile_pic}}
+                                <input type="file" name="profile_pic" id="profile_pic" accept="image/*">
                                 <label class="form-label" for="profile_pic">Profile Picture</label>
+                            </div>
+
+                            <div class="form-outline mb-4" hidden>
+                                <input type="text" name="type" id="type" value="update" />
                             </div>
 
                             <div class="text-center pt-1 mb-5 pb-1">
@@ -166,6 +186,20 @@
 
 
 
+                        </form>
+
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            <div class="form-outline mb-4">
+                                Click 'Delete Account' to delete your account
+                            </div>
+                            <div class="form-outline mb-4" hidden>
+                                <input type="text" name="type" id="type" value="delete" />
+                            </div>
+                            <div class="text-center pt-1 mb-5 pb-1">
+                                <button class="btn btn-danger btn-block fa-lg gradient-custom-2 mb-3"
+                                    type="submit">Delete Account</button>
+                            </div>
                         </form>
                     </div>
                 </div>

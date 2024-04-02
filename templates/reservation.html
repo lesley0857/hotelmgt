@@ -66,12 +66,69 @@
                         <div class="row g-0">
                             <div class="col-lg-6">
                                 <div class="card mb-4">
+                                    <div class="col-lg-8">
+                                        <div class="card mb-4">
+                                            <div class="card-body p-md-5 mx-md-4 ">
+                                                <form method="POST" action="{% url 'preference' %}">
+                                                    {% csrf_token %}
+                                                    <p>Create Your Room Preference</p>
+
+
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="email">Lighting</label>
+                                                        <select class="form-control form-control-sm" id="Lighting"
+                                                            name="Lighting">
+                                                            <option>Chandelier</option>
+                                                            <option>Pendant Light</option>
+                                                            <option>Track Light</option>
+                                                            <option>Cabinet Light</option>
+                                                            <option>Ceiling Light</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-outline mb-4">
+                                                        <label class="form-label" for="email">Bedspread</label>
+                                                        <select class="form-control form-control-sm" id="Bedspread"
+                                                            name="Bedspread">
+                                                            <option>Quilts,Coverlets,Blankets,Throwers,3-Pillows
+                                                            </option>
+                                                            <option>Coverlets,Blankets,Throwers,3-Pillows</option>
+                                                            <option>Coverlets,Blankets,2-Pillows</option>
+                                                            <option>Coverlets,Throwers,3-Pillows</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-outline mb-4" class="form-check">
+                                                        <label class="form-label" for="heater">Heater</label>
+                                                        <select class="form-control form-control-sm" id="heater"
+                                                            name="heater">
+                                                            <option>True</option>
+                                                            <option>False</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-outline mb-4" class="form-check">
+                                                        <label class="form-label" for="airconditioner">Air
+                                                            Conditioner</label>
+                                                        <select class="form-control form-control-sm" id="airconditioner"
+                                                            name="airconditioner">
+                                                            <option>True</option>
+                                                            <option>False</option>
+                                                        </select>
+                                                    </div>
+                                                    <button
+                                                        class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                        type="submit">Create Preference
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                     <div class="card-body p-md-5 mx-md-4 ">
                                         <form method="POST" action="{% url 'reservation' %}">
                                             {% csrf_token %}
                                             <p>Make Reservation</p>
-
-
 
                                             <div class="form-outline mb-4">
                                                 <label class="form-label" for="rooms">Preference</label>
@@ -98,6 +155,15 @@
                                                     name="checkInDateandTime" class="form-control form-control-lg"
                                                     placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3"
                                                     maxlength="3" />
+                                            </div>
+                                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                                <div class="form-outline">
+
+                                                    <label class="form-label" for="days_count">Number of days</label>
+                                                    <input type="number" id="days_count" name="days_count"
+                                                        class="form-control form-control-lg"
+                                                        placeholder="Number of days" />
+                                                </div>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <div class="form-outline">

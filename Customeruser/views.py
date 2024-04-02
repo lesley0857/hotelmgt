@@ -33,15 +33,23 @@ def home_view(request):
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
     form = update_customer(request.POST,instance=userr)
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get('type') == 'update':
         pwd=request.POST.get('password')
         form = update_customer(request.POST,instance=userr)
         if form.is_valid():
             print('valid')
             print(form.cleaned_data.get('profile_pic'))
             userr.set_password(pwd)
-            userr.profile_pic = form.cleaned_data.get('profile_pic')
+            userr.profile_pic = request.POST.get('profile_pic')
+            userr.birth_date = request.POST.get('birth_date')
             form.save(commit=True)
+            return redirect('home')
+    if request.method == "POST" and request.POST.get('type') == 'delete':
+        print('in')
+        userr=CustomBaseuser.objects.get(email=request.user.email)
+        userr.delete()
+        request.user.delete()
+        return redirect('home')
     context={'form': form,'details':request.user}
     return render(request, 'Profile.html', context)
 

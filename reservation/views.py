@@ -18,6 +18,7 @@ def reservation(request):
     user = CustomBaseuser.objects.get(email=basic_user.email)
     free_rooms = RoomModel.objects.filter(status='Free')
     preference = Preferencemodel.objects.filter(user=user)
+    number_of_days_to_spend = request.POST.get('days_count')
     print(preference)
     if request.method=='POST':
         print(request.POST.get('free_rooms'))
@@ -32,7 +33,7 @@ def reservation(request):
                                         lastName=user.lastname,
                                         firstName=user.firstname,
                                         reference_id='1234abc', # random number
-                                        amount=room_booked.price,
+                                        amount=float(room_booked.price) * float(number_of_days_to_spend),
                                         description=f" for {request.POST.get('free_rooms')}",
                                         paymenttime = request.POST.get('checkInDateandTime'))
                 reservation = ReservationModel.objects.create(

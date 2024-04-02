@@ -36,7 +36,7 @@ class CustomBaseuser(AbstractBaseUser, PermissionsMixin):
     joined_date = models.DateTimeField(auto_now_add=True, null=True)
     phone_number = models.IntegerField(blank=False, null=True)
     profile_pic = models.ImageField(
-        upload_to='media', default="media/variac.jpeg/", blank=True, null=True)
+        upload_to='media/', blank=False, null=True)
     email_verified = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)

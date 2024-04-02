@@ -13,6 +13,8 @@ class ReservationModel(models.Model):
     def __str__(self):
         return f'{self.checkInDateandTime} {self.user.email} Reservation'
     
+    
+
 class ReservedRooms(models.Model):
     reservedroom=models.ForeignKey(ReservationModel, on_delete=models.CASCADE)
     room=models.OneToOneField(RoomModel,on_delete=models.CASCADE)

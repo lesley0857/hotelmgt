@@ -28,6 +28,11 @@ SECRET_KEY = 'django-insecure-36u(3+n62gaejxsol=6e6uhurpi*5h&67os0dh1lm(v%bn7ic+
 DEBUG = True
 
 ALLOWED_HOSTS = ['.onrender.com','127.0.0.1']
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
 
 
 # Application definition
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'django_celery_results',
     'django_celery_beat',
+    "debug_toolbar",
 
     "checkout",
     "Customeruser",
@@ -58,6 +64,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -102,6 +109,16 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+
+        # 'default': {
+    #     "ENGINE": "django.db.backends.postgresql",
+    #     "NAME": "railway",
+    #     "USER": "postgres",
+    #     "PASSWORD":  "2253cA4ACd1G*cb6D*B25Ade*C46b3e4",
+    #     "HOST": "monorail.proxy.rlwy.net",
+    #     "PORT": "13728",
+    # }
+
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
