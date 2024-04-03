@@ -9,6 +9,7 @@ class ReservationModel(models.Model):
     user=models.ForeignKey(CustomBaseuser,on_delete=models.CASCADE)
     checkInDateandTime= models.DateTimeField(auto_now_add=True, null=False,blank=False)
     preference=models.ForeignKey(Preferencemodel,on_delete=models.CASCADE,null=True)
+    numberofdays = models.CharField(max_length=150, blank=False,null=True)
     payment=models.OneToOneField(PaymentModel,on_delete=models.CASCADE,null=True,blank=True)
     def __str__(self):
         return f'{self.checkInDateandTime} {self.user.email} Reservation'

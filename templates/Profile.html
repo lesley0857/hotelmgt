@@ -149,21 +149,7 @@
                                 <input type="date" name="birth_date" id="birth_date">
                                 <label class="form-label" for="birth_date">Birth_date</label>
                             </div>
-                            <script type="text/javascript">
-                                $(function () {
-                                    var dtToday = new Date();
 
-                                    var month = dtToday.getMonth() + 1;
-                                    var day = dtToday.getDate();
-                                    var year = dtToday.getFullYear();
-                                    if (month < 10)
-                                        month = '0' + month.toString();
-                                    if (day < 10)
-                                        day = '0' + day.toString();
-                                    var maxDate = year + '-' + month + '-' + day;
-                                    $('#birth_date').attr('min', maxDate);
-                                });
-                            </script>
 
                             <div class="form-outline mb-4">
                                 {{form.phone_number}}

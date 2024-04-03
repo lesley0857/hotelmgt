@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
+import datetime
 
 from Customeruser.models import CustomBaseuser
 from guestpreferenceapp.models import Preferencemodel
@@ -11,6 +12,17 @@ from .models import ReservationModel,ReservedRooms
 from .serializer import Reservation_list_serializer
 from Payment.models import PaymentModel
 from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='login')
+def success_view(request):
+    basic_user = request.user
+    user = CustomBaseuser.objects.get(email=basic_user.email)
+    reservation= ReservationModel.objects.last()
+    payment = PaymentModel.objects.last()
+    checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
+    print(checkout_time)
+    context={'checkout_time':checkout_time,'user':user,'reservation':reservation,'payment':payment}
+    return render(request, 'success.html', context)
 
 @login_required(login_url='login')
 def reservation(request):
@@ -33,22 +45,24 @@ def reservation(request):
                                         lastName=user.lastname,
                                         firstName=user.firstname,
                                         reference_id='1234abc', # random number
-                                        amount=float(room_booked.price) * float(number_of_days_to_spend),
+                                        amount=int(room_booked.price) * int(number_of_days_to_spend),
                                         description=f" for {request.POST.get('free_rooms')}",
                                         paymenttime = request.POST.get('checkInDateandTime'))
+                print(request.POST.get('checkInDateandTime'))
                 reservation = ReservationModel.objects.create(
                                                     user=user,
                                                     payment=payment,
+                                                    numberofdays=request.POST.get('days_count'),
                                                         checkInDateandTime= request.POST.get('checkInDateandTime'),
                                                         preference_id = preference.first().pk,                                   
                     )
                 roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
-                reserved_rooms = ReservedRooms.objects.create(reservedroom_id=reservation.pk,
-                                                                room_id = room_booked.pk
-                                                                )
-                roommodel.status='Occupied'
+                # reserved_rooms = ReservedRooms.objects.create(reservedroom_id=reservation.pk,
+                #                                                 room_id = room_booked.pk
+                #                                                 )
+                # roommodel.status='Occupied'
                 roommodel.save()
-                return redirect('reservation')
+                return redirect('success')
     context={'free_rooms':free_rooms,
              'preference':preference.first()}
     return render(request, 'reservation.html', context)
