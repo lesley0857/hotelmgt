@@ -142,7 +142,7 @@
                                                 <label class="form-label" for="free_rooms">Free Rooms</label>
                                                 <select class="form-control form-control-sm" id="free_rooms"
                                                     name="free_rooms">
-                                                    {% for room in free_rooms %}
+                                                    {% for room in rooms %}
                                                     <option>{{room.roomname}}</option>
                                                     {%endfor%}
                                                 </select>
@@ -178,7 +178,10 @@
                                                         class="form-control form-control-lg"
                                                         placeholder="Number of days" value="1" />
                                                 </div>
+
                                             </div>
+                                            {% if status_context == 'Free' %}
+
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <div class="form-outline">
                                                     <input type="text" id="typeText" value="1234567689076543" disabled
@@ -221,10 +224,24 @@
                                                     maxlength="3" />
                                                 <label class="form-label" for="paymenttime">Payment time</label>
                                             </div>
+                                            {% endif %}
+
+                                            {% if status_context == 'Free' %}
+                                            <input type="text" hidden value="Create" id="determinant"
+                                                name="determinant" />
                                             <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
                                                 type="submit">Create Reservation
                                             </button>
+                                            {% else %}
+                                            <input type="text" hidden value="Check" id="determinant"
+                                                name="determinant" />
+                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
+                                                type="submit">Check Reservation
+                                            </button>
+                                            {% endif %}
                                         </form>
+
+
                                     </div>
 
                                 </div>
