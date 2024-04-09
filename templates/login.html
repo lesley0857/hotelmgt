@@ -3,114 +3,104 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="{% static '/css/login.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="67N1c9daRktc9EUpXijQzGiZhSL5AtL7ijWsIqwX">
+
+    <title>HotelManagement</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <link rel="preload" as="style" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
+    <link rel="modulepreload" href="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js" />
+    <link rel="stylesheet" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
+    <script type="module" src="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js"></script>
 </head>
 
-<body>
-    <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container py-5 h-100">
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="navbar-nav me-auto">
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="{% url 'home' %}">HOTEL</a>
-                            </li> -->
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                            </li>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'preference' %}">Preference</a>
-                            </li>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
-                            </li>
-                            {% endif %}
-                            {% if not request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                            </li>
-                            {% endif %}
-                            {% if not request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{%url 'login' %}">Login</a>
-                            </li>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{%url 'logout' %}">Logout</a>
-                            </li>
-                            {% endif %}
-                        </ul>
-
-                    </div>
-                </div>
-            </nav>
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-xl-10">
-                    <div class="card rounded-3 text-black">
-                        <div class="row g-0">
-                            <div class="col-lg-6">
-                                <div class="card-body p-md-5 mx-md-4">
-
-                                    <div class="text-center">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                                            style="width: 185px;" alt="logo">
-                                        <h4 class="mt-1 mb-5 pb-1">Hotel</h4>
-                                    </div>
-
-                                    <form method="POST" action="{% url 'login' %}">
-                                        {% csrf_token %}
-                                        <p>Please login to your account</p>
-
-                                        <div class="form-outline mb-4">
-                                            <input type="email" id="email" class="form-control" name="email"
-                                                placeholder="Phone number or email address" />
-                                            <label class="form-label" for="email">Email</label>
-                                        </div>
-
-                                        <div class="form-outline mb-4">
-                                            <input type="password" id="password" class="form-control" name="password" />
-                                            <label class="form-label" for="password">Password</label>
-                                        </div>
-
-                                        <div class="text-center pt-1 mb-5 pb-1">
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Log
-                                                in</button>
-                                            <a class="text-muted" href="#!">Forgot password?</a>
-                                        </div>
-
-
-
-                                    </form>
-                                    <div class="d-flex align-items-center justify-content-center pb-4">
-                                        <p class="mb-0 me-2">Don't have an account?</p>
-                                        <a href="{% url 'signup' %}"><button type="button"
-                                                class="btn btn-outline-danger">Create New</button>
-                                        </a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+<body class="font-sans text-gray-900 antialiased">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+        <div>
+            <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    width="80" height="80" x="0" y="0" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512"
+                    xml:space="preserve" class="">
+                    <g>
+                        <path
+                            d="M145.046 230.404H85.321a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321H93.853v-68.257h42.661v68.257zM290.091 230.404h-59.725a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM290.091 366.917h-59.725a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM426.605 230.404H366.88a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM145.046 366.917H85.321a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321H93.853v-68.257h42.661v68.257zM426.605 366.917H366.88a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257z"
+                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                        <path
+                            d="M477.798 494.899V204.807h8.532a8.532 8.532 0 0 0 8.532-8.532v-42.66a8.532 8.532 0 0 0-8.532-8.532h-8.532v-34.128a8.532 8.532 0 0 0-8.532-8.532h-17.064V8.569A8.532 8.532 0 0 0 443.67.037H68.257a8.532 8.532 0 0 0-8.532 8.532v93.853H42.661a8.532 8.532 0 0 0-8.532 8.532v34.128h-8.532a8.532 8.532 0 0 0-8.532 8.532v42.66a8.532 8.532 0 0 0 8.532 8.532h8.532v290.091H0v17.064h512v-17.064h-34.202zM76.789 17.101h358.348v85.321H76.789V17.101zM51.193 119.486h409.54v25.596H51.193v-25.596zm409.54 375.413H51.193V204.807h409.541v290.092zM42.661 187.743h-8.532v-25.596h443.669v25.596H42.661z"
+                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                        <path
+                            d="M242.858 46.292c-1.357-3.468-3.263-6.463-5.721-8.984-2.457-2.521-5.414-4.499-8.869-5.932-3.456-1.433-7.282-2.15-11.48-2.15s-8.031.71-11.499 2.131c-3.468 1.421-6.437 3.398-8.907 5.932-2.47 2.534-4.383 5.535-5.74 9.004-1.357 3.468-2.035 7.237-2.035 11.307s.678 7.839 2.035 11.307c1.357 3.468 3.27 6.469 5.74 9.004 2.47 2.534 5.439 4.511 8.907 5.932 3.468 1.421 7.301 2.131 11.499 2.131s8.024-.71 11.48-2.131c3.456-1.42 6.412-3.398 8.869-5.932 2.457-2.534 4.364-5.535 5.721-9.004 1.357-3.468 2.035-7.237 2.035-11.307 0-4.071-.679-7.84-2.035-11.308zm-9.772 19.504c-.806 2.419-1.965 4.467-3.475 6.143-1.51 1.677-3.347 2.963-5.51 3.859-2.163.896-4.601 1.344-7.314 1.344s-5.158-.448-7.333-1.344c-2.176-.896-4.025-2.182-5.548-3.859-1.523-1.677-2.694-3.724-3.513-6.143-.819-2.419-1.229-5.151-1.229-8.197s.41-5.778 1.229-8.197c.819-2.419 1.99-4.473 3.513-6.162s3.372-2.982 5.548-3.878c2.176-.896 4.62-1.344 7.333-1.344s5.151.448 7.314 1.344c2.163.896 3.999 2.189 5.51 3.878 1.51 1.689 2.668 3.743 3.475 6.162.806 2.419 1.209 5.151 1.209 8.197s-.402 5.778-1.209 8.197zM170.023 29.84v23.881h-26.031V29.84h-10.405v55.518h10.405V61.093h26.031v24.265h10.405V29.84zM350.017 76.834V29.84h-10.329v55.518h32.559v-8.524zM245.353 29.84v8.485h16.779v47.033h10.328V38.325h16.701V29.84zM330.743 38.056V29.84h-35.016v55.518h35.016v-8.255h-24.611V61.4h19.389v-7.948h-19.389V38.056z"
+                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                    </g>
+                </svg> </a>
+            <div>
+                <a href="{% url 'home' %}" class="text-gray-500 dark:text-gray-400 mt-2">
+                    &larr; Go back
+                </a>
             </div>
         </div>
-    </section>
+
+        <div
+            class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <!-- Session Status -->
+
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <!-- Email Address -->
+                <div>
+                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300" for="email">
+                        Email
+                    </label>
+                    <input
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full"
+                        id="email" type="email" name="email" required="required" autofocus="autofocus">
+                    <ul class="text-sm text-red-600 dark:text-red-400 space-y-1 mt-2">
+                        <li>Messages</li>
+                    </ul>
+                </div>
+
+                <!-- Password -->
+                <div class="mt-4">
+                    <label class="block font-medium text-sm text-gray-700 dark:text-gray-300" for="password">
+                        Password
+                    </label>
+
+                    <input
+                        class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full"
+                        id="password" type="password" name="password" required="required">
+
+                </div>
+
+                <!-- Remember Me -->
+                <div class="block mt-4">
+                    <label for="remember_me" class="inline-flex items-center">
+                        <input id="remember_me" type="checkbox"
+                            class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                            name="remember">
+                        <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-end mt-4">
+                    <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
+                        href="https://hotelmanagement.com.ng/public/forgot-password">
+                        Forgot your password?
+                    </a>
+
+                    <button type="submit"
+                        class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ms-3">
+                        Log in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
+
+</html>

@@ -23,6 +23,8 @@ from .serializer import *
 from .tasks import *
 from .form import create_customer,update_customer
 from roomapp.models import *
+from django.core.files import File
+
 
 def home_view(request):
     free_rooms =RoomModel.objects.filter(status='Free')
@@ -34,17 +36,20 @@ def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
     form = update_customer(request.POST,instance=userr)
     if request.method == "POST" and request.POST.get('type') == 'update':
-        print('update')
+        print(request.POST.get('profile_pic'))
         pwd=request.POST.get('password')
         form = update_customer(request.POST,instance=userr)
         if form.is_valid():
             print('valid')
             print(form.cleaned_data.get('profile_pic'))
             userr.set_password(pwd)
-            userr.profile_pic = request.POST.get('profile_pic')
+            print(request.POST.get('profile_pic'))
+            userr.profile_pic = request.POST.get("profile_pic")
             userr.birth_date = request.POST.get('birth_date')
             form.save(commit=True)
             userr.save()
+            print(userr.profile_pic)
+            print(userr.profile_pic.url)
             return redirect('home')
     if request.method == "POST" and request.POST.get('type') == 'delete':
         print('in')
