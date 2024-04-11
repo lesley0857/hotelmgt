@@ -3,6 +3,11 @@ from django.contrib.auth.models import User
 from django import forms
 from .models import CustomBaseuser
 
+class update_picture(forms.ModelForm):
+    
+    class Meta:
+        model = CustomBaseuser
+        fields =['profile_pic']
 
 class update_customer(forms.ModelForm):
     email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))

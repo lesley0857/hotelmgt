@@ -39,10 +39,12 @@ class CustomBaseuser(AbstractBaseUser, PermissionsMixin):
     email_verified = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-
+    
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['firstname', 'lastname']
 
     def __str__(self):
         return f'{self.lastname}:{self.firstname}'
+    
+    

@@ -55,6 +55,7 @@ def reservation(request):
                     reservation = ReservationModel.objects.create(
                                                     user=user,
                                                     payment=payment,
+                                                    room=request.POST.get('free_rooms'),
                                                     numberofdays=request.POST.get('days_count'),
                                                         checkInDateandTime= request.POST.get('checkInDateandTime'),
                                                         preference = preferencemodel                                   
@@ -82,6 +83,7 @@ def reservation(request):
                         preference=Preferencemodel.objects.filter(user=user)
                         reservation = ReservationModel.objects.create(
                                                         user=user,
+                                                        room=request.POST.get('free_rooms'),
                                                         payment=payment,
                                                         numberofdays=request.POST.get('days_count'),
                                                             checkInDateandTime= request.POST.get('checkInDateandTime'),

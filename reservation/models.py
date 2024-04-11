@@ -3,6 +3,7 @@ from Customeruser.models import CustomBaseuser
 from roomapp.models import RoomModel
 from guestpreferenceapp.models import Preferencemodel
 from Payment.models import PaymentModel
+import datetime
 
 # Create your models here.
 class ReservationModel(models.Model):
@@ -11,10 +12,12 @@ class ReservationModel(models.Model):
     preference=models.ForeignKey(Preferencemodel,on_delete=models.CASCADE,null=True)
     numberofdays = models.CharField(max_length=150, blank=False,null=True)
     payment=models.OneToOneField(PaymentModel,on_delete=models.CASCADE,null=True,blank=True)
+    room = models.CharField(max_length=150, blank=False,null=True)
     def __str__(self):
         return f'{self.checkInDateandTime} {self.user.email} Reservation'
     
-    
+    def checkoutime(self):
+        return self.checkInDateandTime + datetime.timedelta(days=int(self.numberofdays))
 
 class ReservedRooms(models.Model):
     reservedroom=models.ForeignKey(ReservationModel, on_delete=models.CASCADE)

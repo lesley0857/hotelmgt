@@ -21,9 +21,11 @@ from .decorators import authenticate_user
 from .models import *
 from .serializer import *
 from .tasks import *
-from .form import create_customer,update_customer
+from .form import create_customer,update_customer,update_picture
 from roomapp.models import *
 from django.core.files import File
+from reservation.models import *
+import datetime
 
 
 def home_view(request):
@@ -32,9 +34,23 @@ def home_view(request):
     return render(request, 'home.html', context)
 
 @login_required(login_url='login')
+def dashboard(request):
+    userr=CustomBaseuser.objects.get(email=request.user.email)
+    reservations = ReservationModel.objects.filter(user=userr)
+    count=reservations.count()
+    context={'reservations':reservations,'count':count,'user':userr}
+    return render(request,'dashboard.html',context)
+
+@login_required(login_url='login')
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
     form = update_customer(request.POST,instance=userr)
+    update_picture_form = update_picture(request.POST,instance=userr)
+    if request.method == "POST":
+        print(update_picture_form.data)
+        if update_picture_form.is_valid():
+            print('pic')
+            update_picture_form.save(commit=True)
     if request.method == "POST" and request.POST.get('type') == 'update':
         print(request.POST.get('profile_pic'))
         pwd=request.POST.get('password')
@@ -57,7 +73,8 @@ def profile_view(request):
         userr.delete()
         request.user.delete()
         return redirect('home')
-    context={'form': form,'details':request.user}
+    context={'form': form,'details':request.user,
+             'update_picture_form':update_picture_form}
     return render(request, 'Profile.html', context)
 
 @authenticate_user
