@@ -44,37 +44,38 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
-    form = update_customer(request.POST,instance=userr)
+    update_customer_form = update_customer(request.POST,instance=userr)
     update_picture_form = update_picture(request.POST,instance=userr)
-    if request.method == "POST":
+    if request.method == "POST" and request.POST.get('type')=='update_picture':
         print(update_picture_form.data)
         if update_picture_form.is_valid():
             print('pic')
             update_picture_form.save(commit=True)
-    if request.method == "POST" and request.POST.get('type') == 'update':
-        print(request.POST.get('profile_pic'))
-        pwd=request.POST.get('password')
-        form = update_customer(request.POST,instance=userr)
-        if form.is_valid():
+
+    if request.method == "POST" and request.POST.get('type') == 'update_user_info':
+        # pwd=request.POST.get('password')
+        
+        if update_customer_form.is_valid():
             print('valid')
-            print(form.cleaned_data.get('profile_pic'))
-            userr.set_password(pwd)
-            print(request.POST.get('profile_pic'))
-            userr.profile_pic = request.POST.get("profile_pic")
-            userr.birth_date = request.POST.get('birth_date')
-            form.save(commit=True)
-            userr.save()
-            print(userr.profile_pic)
-            print(userr.profile_pic.url)
-            return redirect('home')
+            # userr.set_password(pwd)
+            update_customer_form.save(commit=True)
+            print(userr.firstname)
+    if request.method == "POST" and request.POST.get('type') == 'update_password':
+        current_pwd=request.POST.get('password')
+        new_pwd = request.POST.get('new_password')
+        userr.set_password(new_pwd)
+        userr.save()
+        
+
     if request.method == "POST" and request.POST.get('type') == 'delete':
         print('in')
         userr=CustomBaseuser.objects.get(email=request.user.email)
         userr.delete()
         request.user.delete()
-        return redirect('home')
-    context={'form': form,'details':request.user,
-             'update_picture_form':update_picture_form}
+        
+    context={'details':request.user,
+             'update_picture_form':update_picture_form,
+             'update_customer_form':update_customer_form,}
     return render(request, 'Profile.html', context)
 
 @authenticate_user

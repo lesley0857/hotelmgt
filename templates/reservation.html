@@ -1,258 +1,427 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="{% static '/css/login.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <meta charset="UTF-8">
-    <title>Hotel Reservation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="aLhxCwwr9PUuC8MyJGhGvel7eSeUhjvNK21cuEx9">
+
+    <title>HotelManagement</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Scripts -->
+    <link rel="preload" as="style" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
+    <link rel="modulepreload" href="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js" />
+    <link rel="stylesheet" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
+    <script type="module" src="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js"></script>
 </head>
 
-<body>
-    <section class="h-100 gradient-form" style="background-color: #eee;">
-        <div class="container py-5 h-100">
-            <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="{% url 'home' %}">Logo</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="mynavbar">
-                        <ul class="navbar-nav me-auto">
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="{% url 'home' %}">HOTEL</a>
-                            </li> -->
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-                            </li>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <!-- <li class="nav-item">
-                                <a class="nav-link" href="{% url 'preference' %}">Preference</a>
-                            </li> -->
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'reservation' %}">Reservation</a>
-                            </li>
-                            {% endif %}
-                            {% if not request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                            </li>
-                            {% endif %}
-                            {% if not request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{%url 'login' %}">Login</a>
-                            </li>
-                            {% endif %}
-                            {% if request.user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{%url 'logout' %}">Logout</a>
-                            </li>
-                            {% endif %}
-                        </ul>
+<body class="font-sans antialiased">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+            <!-- Primary Navigation Menu -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <!-- Logo -->
+                        <div class="shrink-0 flex items-center">
+                            <a href="https://hotelmanagement.com.ng/public/dashboard">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" x="0" y="0"
+                                    viewBox="0 0 512 512" style="enable-background:new 0 0 512 512" xml:space="preserve"
+                                    class="">
+                                    <g>
+                                        <path
+                                            d="M145.046 230.404H85.321a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321H93.853v-68.257h42.661v68.257zM290.091 230.404h-59.725a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM290.091 366.917h-59.725a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM426.605 230.404H366.88a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.532 8.532 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257zM145.046 366.917H85.321a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321H93.853v-68.257h42.661v68.257zM426.605 366.917H366.88a8.532 8.532 0 0 0-8.532 8.532v85.321a8.532 8.532 0 0 0 8.532 8.532h59.725a8.532 8.532 0 0 0 8.532-8.532v-85.321a8.533 8.533 0 0 0-8.532-8.532zm-8.532 85.321h-42.66v-68.257h42.66v68.257z"
+                                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                                        <path
+                                            d="M477.798 494.899V204.807h8.532a8.532 8.532 0 0 0 8.532-8.532v-42.66a8.532 8.532 0 0 0-8.532-8.532h-8.532v-34.128a8.532 8.532 0 0 0-8.532-8.532h-17.064V8.569A8.532 8.532 0 0 0 443.67.037H68.257a8.532 8.532 0 0 0-8.532 8.532v93.853H42.661a8.532 8.532 0 0 0-8.532 8.532v34.128h-8.532a8.532 8.532 0 0 0-8.532 8.532v42.66a8.532 8.532 0 0 0 8.532 8.532h8.532v290.091H0v17.064h512v-17.064h-34.202zM76.789 17.101h358.348v85.321H76.789V17.101zM51.193 119.486h409.54v25.596H51.193v-25.596zm409.54 375.413H51.193V204.807h409.541v290.092zM42.661 187.743h-8.532v-25.596h443.669v25.596H42.661z"
+                                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                                        <path
+                                            d="M242.858 46.292c-1.357-3.468-3.263-6.463-5.721-8.984-2.457-2.521-5.414-4.499-8.869-5.932-3.456-1.433-7.282-2.15-11.48-2.15s-8.031.71-11.499 2.131c-3.468 1.421-6.437 3.398-8.907 5.932-2.47 2.534-4.383 5.535-5.74 9.004-1.357 3.468-2.035 7.237-2.035 11.307s.678 7.839 2.035 11.307c1.357 3.468 3.27 6.469 5.74 9.004 2.47 2.534 5.439 4.511 8.907 5.932 3.468 1.421 7.301 2.131 11.499 2.131s8.024-.71 11.48-2.131c3.456-1.42 6.412-3.398 8.869-5.932 2.457-2.534 4.364-5.535 5.721-9.004 1.357-3.468 2.035-7.237 2.035-11.307 0-4.071-.679-7.84-2.035-11.308zm-9.772 19.504c-.806 2.419-1.965 4.467-3.475 6.143-1.51 1.677-3.347 2.963-5.51 3.859-2.163.896-4.601 1.344-7.314 1.344s-5.158-.448-7.333-1.344c-2.176-.896-4.025-2.182-5.548-3.859-1.523-1.677-2.694-3.724-3.513-6.143-.819-2.419-1.229-5.151-1.229-8.197s.41-5.778 1.229-8.197c.819-2.419 1.99-4.473 3.513-6.162s3.372-2.982 5.548-3.878c2.176-.896 4.62-1.344 7.333-1.344s5.151.448 7.314 1.344c2.163.896 3.999 2.189 5.51 3.878 1.51 1.689 2.668 3.743 3.475 6.162.806 2.419 1.209 5.151 1.209 8.197s-.402 5.778-1.209 8.197zM170.023 29.84v23.881h-26.031V29.84h-10.405v55.518h10.405V61.093h26.031v24.265h10.405V29.84zM350.017 76.834V29.84h-10.329v55.518h32.559v-8.524zM245.353 29.84v8.485h16.779v47.033h10.328V38.325h16.701V29.84zM330.743 38.056V29.84h-35.016v55.518h35.016v-8.255h-24.611V61.4h19.389v-7.948h-19.389V38.056z"
+                                            fill="#cf1717" opacity="1" data-original="#000000" class=""></path>
+                                    </g>
+                                </svg>
+                            </a>
+                        </div>
 
+                        <!-- Navigation Links -->
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <a class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out"
+                                href="https://hotelmanagement.com.ng/public/dashboard">
+                                Dashboard
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </nav>
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-xl-10">
-                    <div class="card rounded-3 text-black">
-                        <div class="row g-0">
-                            <div class="col-lg-6">
-                                <div class="card mb-4">
 
-                                    <div class="card-body p-md-5 mx-md-4 ">
-                                        <form method="POST" action="{% url 'reservation' %}">
-                                            {% csrf_token %}
-                                            <p>Make Reservation</p>
-
-                                            <!-- <div class="form-outline mb-4">
-                                                <label class="form-label" for="rooms">Preference</label>
-                                                <select class="form-control form-control-sm" id="preference"
-                                                    name="preference">
-                                                    <option>{{preference}}</option>
-                                                </select>
-                                            </div> -->
-
-                                            <div class="form-outline mb-4" class="form-check">
-                                                <label class="form-label" for="free_rooms">Free Rooms</label>
-                                                <select class="form-control form-control-sm" id="free_rooms"
-                                                    name="free_rooms">
-                                                    {% for room in rooms %}
-                                                    <option>{{room.roomname}}</option>
-                                                    {%endfor%}
-                                                </select>
-                                            </div>
-
-                                            <div class="form-outline">
-                                                <label class="form-label" for="checkInDateandTime">Reservation
-                                                    Date</label>
-                                                <input type="datetime-local" id="checkInDateandTime"
-                                                    name="checkInDateandTime" class="form-control form-control-lg"
-                                                    size="1" minlength="3" maxlength="3" />
-                                            </div>
-                                            <script type="text/javascript">
-                                                $(function () {
-                                                    var dtToday = new Date();
-
-                                                    var month = dtToday.getMonth() + 1;
-                                                    var day = dtToday.getDate();
-                                                    var year = dtToday.getFullYear();
-                                                    if (month < 10)
-                                                        month = '0' + month.toString();
-                                                    if (day < 10)
-                                                        day = '0' + day.toString();
-                                                    var maxDate = year + '-' + month + '-' + day;
-                                                    $('#checkInDateandTime').attr('min', maxDate);
-                                                });
-                                            </script>
-                                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                                <div class="form-outline">
-
-                                                    <label class="form-label" for="days_count">Number of days</label>
-                                                    <input type="number" id="days_count" name="days_count"
-                                                        class="form-control form-control-lg"
-                                                        placeholder="Number of days" value="1" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="email">Lighting</label>
-                                                <select class="form-control form-control-sm" id="Lighting"
-                                                    name="Lighting">
-                                                    <option>Chandelier</option>
-                                                    <option>Pendant Light</option>
-                                                    <option>Track Light</option>
-                                                    <option>Cabinet Light</option>
-                                                    <option>Ceiling Light</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="email">Bedspread</label>
-                                                <select class="form-control form-control-sm" id="Bedspread"
-                                                    name="Bedspread">
-                                                    <option>Quilts,Coverlets,Blankets,Throwers,3-Pillows
-                                                    </option>
-                                                    <option>Coverlets,Blankets,Throwers,3-Pillows</option>
-                                                    <option>Coverlets,Blankets,2-Pillows</option>
-                                                    <option>Coverlets,Throwers,3-Pillows</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-outline mb-4" class="form-check">
-                                                <label class="form-label" for="heater">Heater</label>
-                                                <select class="form-control form-control-sm" id="heater" name="heater">
-                                                    <option>True</option>
-                                                    <option>False</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-outline mb-4" class="form-check">
-                                                <label class="form-label" for="airconditioner">Air
-                                                    Conditioner</label>
-                                                <select class="form-control form-control-sm" id="airconditioner"
-                                                    name="airconditioner">
-                                                    <option>True</option>
-                                                    <option>False</option>
-                                                </select>
-                                            </div>
-                                            {% if status_context == 'Free' %}
-
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <div class="form-outline">
-                                                    <input type="text" id="typeText" value="1234567689076543" disabled
-                                                        class="form-control form-control-lg" siez="17"
-                                                        placeholder="1234 5678 9012 3457" minlength="19"
-                                                        maxlength="19" />
-                                                    <label class="form-label" for="typeText">Card Number</label>
-                                                </div>
-                                                <img src="https://img.icons8.com/color/48/000000/visa.png" alt="visa"
-                                                    width="64px" />
-                                            </div>
-
-                                            <div class="d-flex justify-content-between align-items-center mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" id="typeName" name="name" disabled
-                                                        value="{{request.user.firstname}} {{request.user.lastname}}"
-                                                        class="form-control form-control-lg" siez="17"
-                                                        placeholder="Cardholder's Name" />
-                                                    <label class="form-label" for="typeName">Cardholder's Name</label>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-outline">
-                                                <input type="text" id="typeExp" disabled value="12/24"
-                                                    class="form-control form-control-lg" placeholder="MM/YYYY" size="7"
-                                                    id="exp" minlength="7" maxlength="7" />
-                                                <label class="form-label" for="typeExp">Expiration</label>
-                                            </div>
-                                            <div class="form-outline">
-                                                <input type="password" id="typeText2" disabled value="267"
-                                                    class="form-control form-control-lg"
-                                                    placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3"
-                                                    maxlength="3" />
-                                                <label class="form-label" for="typeText2">Cvv</label>
-                                            </div>
-                                            <div class="form-outline" hidden>
-                                                <input type="datetime-local" id="paymenttime" name="paymenttime"
-                                                    class="form-control form-control-lg"
-                                                    placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3"
-                                                    maxlength="3" />
-                                                <label class="form-label" for="paymenttime">Payment time</label>
-                                            </div>
-                                            {% endif %}
-
-                                            {% if status_context == 'Free' %}
-                                            <input type="text" hidden value="Create" id="determinant"
-                                                name="determinant" />
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Create Reservation
-                                            </button>
-                                            {% else %}
-                                            <input type="text" hidden value="Check" id="determinant"
-                                                name="determinant" />
-                                            <button class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3"
-                                                type="submit">Check Reservation
-                                            </button>
-                                            {% endif %}
-                                        </form>
-
-
+                    <!-- Settings Dropdown -->
+                    <div class="hidden sm:flex sm:items-center sm:ms-6">
+                        <div class="relative">
+                            <div>
+                                <button
+                                    class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                                    <img src="storage/avatars/9FP1JvObPlxlW6SN0fRInssvLpdVTsN150YmXNDE.png" alt=""
+                                        style="margin-right:1em; border-radius:10px; width:40px; height:40px;">
+                                    <div>
+                                        Oluoma
                                     </div>
 
+                                    <div class="ms-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute z-50 mt-2 w-48 rounded-md shadow-lg ltr:origin-top-right rtl:origin-top-left end-0"
+                                style="display: none;" @click="open = false">
+                                <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-gray-700">
+                                    <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                                        href="https://hotelmanagement.com.ng/public/profile">Profile</a>
+
+                                    <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                                        href="https://hotelmanagement.com.ng/public/reservation">Create Reservation</a>
+
+                                    <!-- Authentication -->
+                                    <form method="POST" action="https://hotelmanagement.com.ng/public/logout">
+                                        <input type="hidden" name="_token"
+                                            value="aLhxCwwr9PUuC8MyJGhGvel7eSeUhjvNK21cuEx9" autocomplete="off">
+                                        <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
+                                            href="https://hotelmanagement.com.ng/public/logout" onclick="event.preventDefault();
+                                                this.closest('form').submit();">Log Out</a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog modal-confirm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="icon-box">
-                        <i class="material-icons">&#xE876;</i>
+
+                    <!-- Hamburger -->
+                    <div class="-me-2 flex items-center sm:hidden">
+                        <button @click="open = ! open"
+                            class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
+                            <img src="storage/avatars/9FP1JvObPlxlW6SN0fRInssvLpdVTsN150YmXNDE.png" alt=""
+                                style="margin-right:0.7em; border-radius:10px; width:40px; height:40px;"> <span
+                                style="margin-right:0.7em;">Oluoma</span>
+                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                                <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden"
+                                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
                     </div>
-                    <h4 class="modal-title w-100">Test Payment Success!</h4>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center">Your reservation has been made.</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-success btn-block" data-dismiss="modal">OK</button>
                 </div>
             </div>
-        </div>
+
+            <!-- Responsive Navigation Menu -->
+            <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+                <div class="pt-2 pb-3 space-y-1">
+                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                        href="https://hotelmanagement.com.ng/public/dashboard">
+                        Dashboard
+                    </a>
+                </div>
+
+                <!-- Responsive Settings Options -->
+                <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                    <div class="mt-3 space-y-1">
+                        <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                            href="https://hotelmanagement.com.ng/public/profile">
+                            Profile
+                        </a>
+
+                        <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                            href="https://hotelmanagement.com.ng/public/reservation">
+                            Create Reservation
+                        </a>
+
+                        <!-- Authentication -->
+                        <form method="POST" action="https://hotelmanagement.com.ng/public/logout">
+                            <input type="hidden" name="_token" value="aLhxCwwr9PUuC8MyJGhGvel7eSeUhjvNK21cuEx9"
+                                autocomplete="off">
+                            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                href="https://hotelmanagement.com.ng/public/logout" onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                                Log Out
+                            </a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Page Heading -->
+        <header class="bg-white dark:bg-gray-800 shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                    <a href="https://hotelmanagement.com.ng/public/dashboard"
+                        class="text-gray-500 dark:text-gray-400">Dasboard</a> > Create Reservation
+                </h2>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main>
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
+                            <style>
+                                select option[value=""][disabled] {
+                                    color: #ccc;
+                                }
+
+                                .cs-input {
+                                    padding: 10px 10px;
+                                }
+                            </style>
+                            <section>
+
+
+
+
+
+                                <header>
+
+                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                        <u>Customer Information</u>
+                                    </h2>
+
+                                </header>
+
+
+                                <form id="ctreate-reservation" method="post"
+                                    action="https://hotelmanagement.com.ng/public/reservation/create">
+                                    <input type="hidden" name="_token" value="aLhxCwwr9PUuC8MyJGhGvel7eSeUhjvNK21cuEx9"
+                                        autocomplete="off">
+                                    <div class="mt-6 space-y-6">
+                                        <div class="mt-1 block w-full">
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="">
+                                                Name
+                                            </label>
+                                            <div
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full cs-input">
+                                                Oluoma Les</div>
+                                        </div>
+                                        <div class="mt-1 block w-full">
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="">
+                                                Email
+                                            </label>
+
+                                            <div
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full cs-input">
+                                                les@gmail.com</div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="mt-6 space-y-6">
+
+                                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                            <u>Reservation Details</u>
+                                        </h2>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="room">
+                                                Room
+                                            </label>
+                                            <select id="room" name="room"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Select a room</option>
+                                                <option value="Room 1">Room 1</option>
+                                                <option value="Room 2">Room 2</option>
+                                                <option value="Room 3">Room 3</option>
+                                                <option value="Room 4">Room 4</option>
+                                                <option value="Room 5">Room 5</option>
+                                                <option value="Room 6">Room 6</option>
+                                                <option value="Room 7">Room 7</option>
+                                                <option value="Room 8">Room 8</option>
+                                                <option value="Room 9">Room 9</option>
+                                                <option value="Room 10">Room 10</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="checkin_date">
+                                                Check-in Date
+                                            </label>
+                                            <input
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                id="checkin_date" name="checkin_date" type="date" value=""
+                                                required="required" autofocus="autofocus">
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="days">
+                                                Number of Days to Spend
+                                            </label>
+                                            <select id="days" name="days"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Select number of days to lodge
+                                                </option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                                <option value="9">9</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                                <option value="13">13</option>
+                                                <option value="14">14</option>
+                                                <option value="15">15</option>
+                                                <option value="16">16</option>
+                                                <option value="17">17</option>
+                                                <option value="18">18</option>
+                                                <option value="19">19</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="mt-6 space-y-6">
+
+                                        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                            <u>Preferences</u>
+                                        </h2>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="lighting">
+                                                Lighting
+                                            </label>
+                                            <select id="lighting" name="lighting"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Select a lighting type</option>
+                                                <option value="Chandelier">Chandelier</option>
+                                                <option value="Pendant Light">Pendant Light</option>
+                                                <option value="Track Light">Track Light</option>
+                                                <option value="Cabinet Light">Cabinet Light</option>
+                                                <option value="Ceiling Light">Ceiling Light</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="bedspread">
+                                                Bedspread
+                                            </label>
+                                            <select id="bedspread" name="bedspread"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Select a preffered beadspread type
+                                                </option>
+                                                <option value="Quilts,Coverlets,Blankets,Throwers,3-Pillows">
+                                                    Quilts,Coverlets,Blankets,Throwers,3-Pillows</option>
+                                                <option value="Coverlets,Blankets,Throwers,3-Pillows">
+                                                    Coverlets,Blankets,Throwers,3-Pillows</option>
+                                                <option value="Coverlets,Blankets,2-Pillows">
+                                                    Coverlets,Blankets,2-Pillows</option>
+                                                <option value="Coverlets,Throwers,3-Pillows">
+                                                    Coverlets,Throwers,3-Pillows</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="heater">
+                                                Heater
+                                            </label>
+                                            <select id="heater" name="heater"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Do you want a heater?</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block font-medium text-sm text-gray-700 dark:text-gray-300"
+                                                for="air_conditioner">
+                                                Air Conditioner
+                                            </label>
+                                            <select id="air_conditioner" name="air_conditioner"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                                required autofocus>
+                                                <option value="" disabled selected>Do you want an Air Conditioner?
+                                                </option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </div>
+
+                                        <div id="Tcost" class="text-white mt-3"></div>
+                                    </div>
+
+                                    <div class="flex items-center gap-4 mt-3">
+
+
+                                        <button type="submit"
+                                            class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-white dark:text-gray-800 uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-white focus:bg-gray-700 dark:focus:bg-white active:bg-gray-900 dark:active:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
+                                            Check Reservation
+                                        </button>
+                                    </div>
+                                </form>
+                            </section>
+
+
+                            <script>
+
+                                // Get the references to the HTML elements
+                                const daysInput = document.getElementById("days");
+                                const costDiv = document.getElementById("Tcost");
+
+                                // Function to calculate and display the cost
+                                function calculateCost() {
+                                    const daysValue = parseInt(daysInput.value);
+                                    const cost = daysValue * 120;
+                                    costDiv.textContent = `The total cost is £${cost}`;
+                                }
+
+                                // Call the calculateCost function initially
+                                calculateCost();
+
+                                // Add an event listener to the "days" input
+                                daysInput.addEventListener("change", calculateCost);
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 
