@@ -17,7 +17,9 @@
     <link rel="preload" as="style" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
     <link rel="modulepreload" href="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js" />
     <link rel="stylesheet" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
+    <link rel="stylesheet" href="{%static 'css/menu.css'%}" />
     <script type="module" src="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js"></script>
+    <script type="text/javascript" src="{% static 'js/menu.js'%}"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -60,8 +62,7 @@
 
                     <!-- Settings Dropdown -->
                     <div class="hidden sm:flex sm:items-center sm:ms-6">
-                        <div class="relative" x-data="{ open: false }" @click.outside="open = false"
-                            @close.stop="open = false">
+                        <div class="" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
                             <div @click="open = ! open">
                                 <button
                                     class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
@@ -85,28 +86,32 @@
                                                 clip-rule="evenodd" />
                                         </svg>
                                     </div>
+                                    <ol>
+                                        {% if request.user.is_authenticated %}
+                                        <li>
+                                            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                                href="{%url 'profile'%}">
+                                                Profile
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                                href="{%url 'reservation'%}">
+                                                create reservation
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                                href="{%url 'logout'%}">
+                                                logout
+                                            </a>
+                                        </li>
+                                        {%endif%}
+                                    </ol>
                                 </button>
                             </div>
 
-                            <div x-show="open" x-transition:enter="transition ease-out duration-200"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute z-50 mt-2 w-48 rounded-md shadow-lg ltr:origin-top-right rtl:origin-top-left end-0"
-                                style="display: none;" @click="open = false">
-                                {% if not request.user.is_authenticated %}
-                                <div class="rounded-md ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-gray-700">
-                                    <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
-                                        href="{% url 'profile' %}">Profile</a>
 
-                                    <a class="block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out"
-                                        href="{% url 'reservation' %}">Create Reservation</a>
-
-                                </div>
-                                {% endif %}
-                            </div>
                         </div>
                     </div>
 
@@ -122,15 +127,38 @@
 
                             {% endif %}
                             <span style="margin-right:0.7em;">{{user.firstname}}</span>
-                            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <!-- <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                                 <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M4 6h16M4 12h16M4 18h16" />
                                 <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden"
                                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12" />
-                            </svg>
+                            </svg> -->
+                            <ol>
+                                {% if request.user.is_authenticated %}
+                                <li>
+                                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                        href="{%url 'profile'%}">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                        href="{%url 'reservation'%}">
+                                        create reservation
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
+                                        href="{%url 'logout'%}">
+                                        logout
+                                    </a>
+                                </li>
+                                {%endif%}
+                            </ol>
                         </button>
+
                     </div>
                 </div>
             </div>

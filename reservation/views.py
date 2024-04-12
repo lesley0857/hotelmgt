@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 import datetime
-
+from django.contrib import messages
 from Customeruser.models import CustomBaseuser
 from guestpreferenceapp.models import Preferencemodel
 from roomapp.models import RoomModel
@@ -22,10 +22,27 @@ def success_view(request):
     preference = Preferencemodel.objects.filter(user=user).first()
     checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
     print(checkout_time)
+    messages.success(request,"Reservation Created")
     context={'checkout_time':checkout_time,
              'user':user,'reservation':reservation,'payment':payment,
              'preference':preference}
     return render(request, 'success.html', context)
+
+@login_required(login_url='login')
+def reservation_id(request,id):
+    basic_user = request.user
+    user = CustomBaseuser.objects.get(email=basic_user.email)
+    reservation= ReservationModel.objects.get(id=id)
+    payment_id = reservation.payment.pk
+    payment = PaymentModel.objects.get(id=payment_id)
+    preference = Preferencemodel.objects.filter(user=user).first()
+    checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
+    print(checkout_time)
+    context={'checkout_time':checkout_time,
+             'user':user,'reservation':reservation,'payment':payment,
+             'preference':preference}
+    return render(request, 'reservation_id.html', context)
+
 
 @login_required(login_url='login')
 def reservation(request):
@@ -42,6 +59,7 @@ def reservation(request):
         status = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
         if status.status=='Free':
             status_context='Free'
+            messages.success(request,f"{request.POST.get('free_rooms')} is Free")
             if request.POST.get('determinant')=='Create':
                 room_booked = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                 try:
@@ -66,11 +84,12 @@ def reservation(request):
                     roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                     roommodel.status='Occupied'
                     roommodel.save()
+                    messages.success(request,"Reservation Created")
                     context={'free_rooms':free_rooms,'rooms':rooms,
                     'preference':preference.first()}
                     return redirect('success')
                 except:
-                        preferencemodel = Preferencemodel.objects.create(user_id=user.pk,
+                        preferencemodel = Preferencemodel.objects.create(user=user,
                                                    lighting=request.POST.get('lighting'),
                                                    bedspread=request.POST.get('bedspread'),
                                                    heater=request.POST.get('heater'),
@@ -95,6 +114,7 @@ def reservation(request):
                         roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                         roommodel.status='Occupied'
                         roommodel.save()
+                        messages.success(request,"Reservation Created")
                         context={'free_rooms':free_rooms,'rooms':rooms,
                         'preference':preference.first()}
                         return redirect('success')
@@ -105,6 +125,7 @@ def reservation(request):
                 return render(request, 'reservation.html', context)
         else:
             status_context='Occupied'
+            messages.success(request,f"{request.POST.get('free_rooms')} is Occupied")
             context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
              'preference':preference.first()}
             return render(request, 'reservation.html', context)

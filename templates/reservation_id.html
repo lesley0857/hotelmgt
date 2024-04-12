@@ -1,11 +1,10 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="MPJM6dMEoEPMSnmatQSKbYL7XEhuFxBzAoUNd0BM">
+    <meta name="csrf-token" content="QihF5OhiXwSUgrBjrEECOq10ckmQvPcHeQunLaJ4">
 
     <title>HotelManagement</title>
 
@@ -14,12 +13,9 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript" src="{% static  '/js/menu.js' %}"></script>
     <link rel="preload" as="style" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
     <link rel="modulepreload" href="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js" />
     <link rel="stylesheet" href="https://hotelmanagement.com.ng/public/build/assets/app-CxbmzRxr.css" />
-    <link rel="stylesheet" href="{%static 'css/menu.css'%}" />
     <script type="module" src="https://hotelmanagement.com.ng/public/build/assets/app-9mbrzSRH.js"></script>
 </head>
 
@@ -89,16 +85,11 @@
                                     </div>
                                     <ol>
                                         {% if request.user.is_authenticated %}
+
                                         <li>
                                             <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
                                                 href="{%url 'profile'%}">
                                                 Profile
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
-                                                href="{%url 'reservation'%}">
-                                                create reservation
                                             </a>
                                         </li>
                                         <li>
@@ -146,12 +137,6 @@
                                 </li>
                                 <li>
                                     <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
-                                        href="{%url 'reservation'%}">
-                                        create reservation
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
                                         href="{%url 'logout'%}">
                                         logout
                                     </a>
@@ -177,14 +162,10 @@
                 {% if request.user.is_authenticated %}
                 <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
                     <div class="mt-3 space-y-1">
+
                         <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
                             href="{%url 'profile'%}">
                             Profile
-                        </a>
-
-                        <a class="block w-full ps-3 pe-4 py-2 border-l-4 border-transparent text-start text-base font-medium text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 focus:outline-none focus:text-gray-800 dark:focus:text-gray-200 focus:bg-gray-50 dark:focus:bg-gray-700 focus:border-gray-300 dark:focus:border-gray-600 transition duration-150 ease-in-out"
-                            href="{%url 'reservation'%}">
-                            Create Reservation
                         </a>
                         {%else%}
 
@@ -202,64 +183,54 @@
         <header class="bg-white dark:bg-gray-800 shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Hotel Management Customer Dashboard
-
+                    <a href="https://hotelmanagement.com.ng/public/dashboard"
+                        class="text-gray-500 dark:text-gray-400">Dasboard</a> > RESERVATION-{{reservation.id}}
                 </h2>
             </div>
         </header>
-        {%if messages%}
-        {%for i in messages%}
-        <div>
-            <div class="py-2">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
-                        style="border: #6a6c6d 1px solid">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            {{i}}
-                            </b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {%endfor%}
-        {%else%}
-        {%endif%}
-
 
         <!-- Page Content -->
         <main>
-            <div class="py-6">
-                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6 text-gray-900 dark:text-gray-100">
-                            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                You have
-                                {{count}} reservation(s)
-                            </h2>
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
+                            <style>
+
+                            </style>
+                            <section>
+
+                                <header>
+                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-5">
+                                        <u>Reservation Details</u>
+                                    </h2>
+                                    <ul class="text-gray-500 dark:text-gray-400"
+                                        style="list-style-type:disc;list-style-position:inside;">
+                                        <li>Reservation Code: <b>RESERVATION-{{payment.reference_id}}</b></li>
+                                        <li>Full Name: <b>{{user.firstname}} {{user.lastname}}</b></li>
+                                        <li>Full Email: <b>{{user.email}}</b></li>
+                                        <li>Full Room: <b>{{reservatio.room}}</b></li>
+                                        <li>Check-in Date: <b>{{payment.paymenttime}}</b></li>
+                                        <li>Check-out Date/Time: <b>{{checkout_time}}</b></li>
+                                        <li>Lighting Preference: <b>{{preference.lighting}}</b></li>
+                                        <li>Bedspread Preference: <b>{{preference.bedspread}}</b></li>
+                                        <li>Heater: <b>{{preference.heater}}</b></li>
+                                        <li>Air Condition: <b>{{preference.airconditioner}}</b></li>
+                                        <li>Total Amount: <b>{{payment.amount}}</b></li>
+                                        <li>Time Created: <b>{{payment.paymenttime}}</b></li>
+                                    </ul>
+                                    <p class="text-gray-500 dark:text-gray-400 mt-4 text-danger" style="color:red">
+                                        <b>Want to cancel reservation? Call +1234567890<b>
+                                    </p>
+                                </header>
+
+
+
+                            </section>
                         </div>
                     </div>
                 </div>
             </div>
-
-            {% if reservations %}
-            {% for i in reservations %}
-            <a href="{{i.getabsoluteurl}}">
-                <div class="py-2">
-                    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
-                            style="border: #6a6c6d 1px solid">
-                            <div class="p-6 text-gray-900 dark:text-gray-100">
-                                <b>{{i.room}}</b> from <b>{{i.checkInDateandTime}}</b> to <b>{{i.checkoutime}}
-                                </b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            {% endfor %}
-            {%endif%}
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8" style="margin-top:1em"></div>
         </main>
     </div>
 </body>

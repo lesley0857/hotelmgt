@@ -38,6 +38,7 @@ urlpatterns = [
     path('preference/', http_preference, name='preference'),
     path('payment/', payment, name='payment'),
     path('reservation/', reservation, name='reservation'),
+    path('reservation/<int:id>/', reservation_id, name='reservation_id'),
     path('signup/', signup_view, name='signup'),
     path('', home_view, name='home'),
 

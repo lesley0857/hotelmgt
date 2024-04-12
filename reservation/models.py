@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from Customeruser.models import CustomBaseuser
 from roomapp.models import RoomModel
 from guestpreferenceapp.models import Preferencemodel
@@ -18,6 +19,9 @@ class ReservationModel(models.Model):
     
     def checkoutime(self):
         return self.checkInDateandTime + datetime.timedelta(days=int(self.numberofdays))
+
+    def getabsoluteurl(self):
+        return reverse('reservation_id',kwargs={"id":self.id})
 
 class ReservedRooms(models.Model):
     reservedroom=models.ForeignKey(ReservationModel, on_delete=models.CASCADE)
