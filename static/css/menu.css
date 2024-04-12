@@ -1,0 +1,13 @@
+#clicked {
+    min-height: 40vh;
+    min-width: 20vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background: hsla(0, 0%, 0%, 0.767);
+    list-style-type: none;
+    text-decoration: none;
+    position: relative;
+    top: 25px;
+    left: 5vw;
+}

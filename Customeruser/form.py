@@ -24,12 +24,12 @@ class update_customer(forms.ModelForm):
         
 
 class create_customer(forms.ModelForm):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))    
-    firstname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))    
-    lastname = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))    
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full'}))    
+    firstname = forms.CharField(widget=forms.TextInput(attrs={'class': 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full'}))    
+    lastname = forms.CharField(widget=forms.TextInput(attrs={'class': 'border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full'}))    
     
     class Meta:
         model = CustomBaseuser
-        fields =['email','password','firstname','lastname']
+        fields =['firstname','lastname','email','password']
  

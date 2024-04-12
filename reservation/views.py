@@ -19,9 +19,12 @@ def success_view(request):
     user = CustomBaseuser.objects.get(email=basic_user.email)
     reservation= ReservationModel.objects.last()
     payment = PaymentModel.objects.last()
+    preference = Preferencemodel.objects.filter(user=user).first()
     checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
     print(checkout_time)
-    context={'checkout_time':checkout_time,'user':user,'reservation':reservation,'payment':payment}
+    context={'checkout_time':checkout_time,
+             'user':user,'reservation':reservation,'payment':payment,
+             'preference':preference}
     return render(request, 'success.html', context)
 
 @login_required(login_url='login')
@@ -42,7 +45,7 @@ def reservation(request):
             if request.POST.get('determinant')=='Create':
                 room_booked = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                 try:
-                    preferencemodel = Preferencemodel.objects.get(user_id=user.pk)
+                    preferencemodel = Preferencemodel.objects.filter(user_id=user.pk).first()
                     payment=PaymentModel.objects.create(user=user,
                                         lastName=user.lastname,
                                         firstName=user.firstname,
@@ -58,7 +61,7 @@ def reservation(request):
                                                     room=request.POST.get('free_rooms'),
                                                     numberofdays=request.POST.get('days_count'),
                                                         checkInDateandTime= request.POST.get('checkInDateandTime'),
-                                                        preference = preferencemodel                                   
+                                                        preference = preferencemodel                             
                     )
                     roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                     roommodel.status='Occupied'

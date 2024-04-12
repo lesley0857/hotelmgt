@@ -45,9 +45,10 @@ def dashboard(request):
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
     update_customer_form = update_customer(request.POST,instance=userr)
-    update_picture_form = update_picture(request.POST,instance=userr)
+    update_picture_form = update_picture(request.POST,request.FILES,instance=userr)
     if request.method == "POST" and request.POST.get('type')=='update_picture':
         print(update_picture_form.data)
+        update_picture_form = update_picture(request.POST,request.FILES,instance=userr)
         if update_picture_form.is_valid():
             print('pic')
             update_picture_form.save(commit=True)
@@ -63,8 +64,11 @@ def profile_view(request):
     if request.method == "POST" and request.POST.get('type') == 'update_password':
         current_pwd=request.POST.get('password')
         new_pwd = request.POST.get('new_password')
-        userr.set_password(new_pwd)
-        userr.save()
+        check = userr.check_password(current_pwd)
+        print(check)
+        if check == True:
+            userr.set_password(new_pwd)
+            userr.save()
         
 
     if request.method == "POST" and request.POST.get('type') == 'delete':
@@ -86,7 +90,7 @@ def signup_view(request):
                                          request.POST.get('firstname'),
                                          request.POST.get('lastname'),
                                          request.POST.get('password'))
-        return redirect('login')
+        return redirect('dashboard')
     context = {'form':form,'None':''}
     return render(request, 'signup.html', context)
 
@@ -98,7 +102,7 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user != None: 
             login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
         else:
             messages.info(request, "Username OR Password is incorrect") #you dont need to pass through context
     context = {}
