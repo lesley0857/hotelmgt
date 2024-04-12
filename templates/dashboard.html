@@ -172,6 +172,25 @@
                 </h2>
             </div>
         </header>
+        {%if messages%}
+        {%for i in messages%}
+        <div>
+            <div class="py-2">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg"
+                        style="border: #6a6c6d 1px solid">
+                        <div class="p-6 text-gray-900 dark:text-gray-100">
+                            {{i}}
+                            </b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+        {%else%}
+        {%endif%}
+
 
         <!-- Page Content -->
         <main>

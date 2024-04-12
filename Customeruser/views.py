@@ -102,10 +102,10 @@ def login_view(request):
         user = authenticate(request, email=email, password=password)
         if user != None: 
             login(request, user)
-            messages.info(request,"Successful")
+            messages.success(request,"Successful Login")
             return redirect('dashboard')
         else:
-            messages.info(request, "Username OR Password is incorrect") #you dont need to pass through context
+            messages.error(request, "Username OR Password is incorrect") #you dont need to pass through context
     context = {}
     return render(request, 'login.html', context)
 
