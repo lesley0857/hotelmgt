@@ -44,7 +44,7 @@ def dashboard(request):
 @login_required(login_url='login')
 def profile_view(request):
     userr=CustomBaseuser.objects.get(email=request.user.email)
-    update_customer_form = update_customer(request.POST,instance=userr)
+    update_customer_form = update_customer(request.POST,request.FILES,instance=userr)
     update_picture_form = update_picture(request.POST,request.FILES,instance=userr)
     if request.method == "POST" and request.POST.get('type')=='update_picture':
         print(update_picture_form.data)
@@ -55,7 +55,7 @@ def profile_view(request):
 
     if request.method == "POST" and request.POST.get('type') == 'update_user_info':
         # pwd=request.POST.get('password')
-        
+        update_customer_form = update_customer(request.POST,request.FILES,instance=userr)
         if update_customer_form.is_valid():
             print('valid')
             # userr.set_password(pwd)

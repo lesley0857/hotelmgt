@@ -57,9 +57,17 @@ def reservation(request):
     if request.method=='POST':
         print(request.POST.get('free_rooms'))
         status = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
-        if status.status=='Free':
+        reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
+        reservation = reservation_list.last()
+        checkout_time = reservation.checkoutime()
+        year = request.POST.get('checkInDateandTime').split('-')[0]
+        month= request.POST.get('checkInDateandTime').split('-')[1]
+        day = request.POST.get('checkInDateandTime').split('-')[2].split('T')[0]
+        print(checkout_time.day)
+        potential_checkin = request.POST.get('checkInDateandTime').split('-')[2].split('T')[0]         
+        if status.status=='Free' or int(potential_checkin) > checkout_time.day:
             status_context='Free'
-            messages.success(request,f"{request.POST.get('free_rooms')} is Free")
+            messages.success(request,f"{request.POST.get('free_rooms')} is Free on {day} of {month} {year}")
             if request.POST.get('determinant')=='Create':
                 room_booked = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                 try:
@@ -127,6 +135,7 @@ def reservation(request):
             reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
             reservation = reservation_list.last()
             checkout_time = reservation.checkoutime()            
+            
             if datetime.datetime.now().day >= checkout_time.day:
                 room = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                 room.status = 'Free'
