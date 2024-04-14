@@ -124,11 +124,21 @@ def reservation(request):
                 'preference':preference.first()}
                 return render(request, 'reservation.html', context)
         else:
-            status_context='Occupied'
-            messages.success(request,f"{request.POST.get('free_rooms')} is Occupied")
-            context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
-             'preference':preference.first()}
-            return render(request, 'reservation.html', context)
+            reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
+            reservation = reservation_list.last()
+            checkout_time = reservation.checkoutime()            
+            if datetime.datetime.now().day >= checkout_time.day:
+                room = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
+                room.status = 'Free'
+                room.save()
+                messages.success(request,f"{room} is Free")
+            else:
+                status_context='Occupied'
+                messages.success(request,f"""{request.POST.get('free_rooms')} is Occupied, would be free by
+                             {checkout_time.ctime()}""")
+                context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
+                    'preference':preference.first()}
+                return render(request, 'reservation.html', context)
         
     context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
              'preference':preference.first()}

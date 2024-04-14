@@ -18,8 +18,8 @@ class ReservationModel(models.Model):
         return f'{self.checkInDateandTime} {self.user.email} Reservation'
     
     def checkoutime(self):
-        return self.checkInDateandTime + datetime.timedelta(days=int(self.numberofdays))
-
+        time = self.checkInDateandTime + datetime.timedelta(days=int(self.numberofdays))
+        return time
     def getabsoluteurl(self):
         return reverse('reservation_id',kwargs={"id":self.id})
 
