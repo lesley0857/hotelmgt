@@ -55,7 +55,7 @@ def profile_view(request):
 
     if request.method == "POST" and request.POST.get('type') == 'update_user_info':
       
-        update_customer_form = update_customer(instance=userr)
+        update_customer_form = update_customer(data=request.POST,instance=userr)
         if update_customer_form.is_valid():
             print('valid')
             # userr.set_password(pwd)
