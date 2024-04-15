@@ -127,7 +127,6 @@ def reservation(request):
                         'preference':preference.first()}
                         return redirect('success')
             if request.POST.get('determinant')=='Check':
-                print(request.POST.get('determinant'))
                 context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
                 'preference':preference.first()}
                 return render(request, 'reservation.html', context)

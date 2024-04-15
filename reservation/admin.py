@@ -7,6 +7,7 @@ from .models import *
 from guestpreferenceapp.models import *
 
 # Register your models here.
+admin.site.register(StateModel)
 class ReservedRoomsAdmin(admin.StackedInline):
     model = ReservedRooms
     def formfield_for_foreignkey(self, db_field: ForeignKey[ReservedRooms], request: HttpRequest | None, **kwargs: Any) -> ModelChoiceField | None:
