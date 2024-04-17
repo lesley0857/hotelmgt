@@ -185,13 +185,15 @@ def reservation(request):
                         return redirect('success')
                     
                     else:
-                        preferencemodel = Preferencemodel.objects.filter(user=user)[0]
+                        preferencemodel = Preferencemodel.objects.filter(user=user).last()
                         print(preferencemodel.lighting)
-                        preferencemodel.lighting = request.POST.get('Lighting'),
-                        preferencemodel.bedspread = request.POST.get('Bedspread'),
-                        preferencemodel.heater= request.POST.get('heater'),
-                        preferencemodel.airconditioner = request.POST.get('airconditioner')
-                        preferencemodel.save()
+                        preferencemodel.delete()
+                        preferencemodel.objects.create(user=user,
+                                                    lighting=request.POST.get('Lighting'),
+                                                    bedspread=request.POST.get('Bedspread'),
+                                                    heater=request.POST.get('heater'),
+                                                    airconditioner=request.POST.get('airconditioner'))
+                        
                         payment=PaymentModel.objects.create(user=user,
                                             lastName=user.lastname,
                                             firstName=user.firstname,
