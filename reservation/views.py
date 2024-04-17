@@ -21,7 +21,7 @@ def success_view(request):
     payment = PaymentModel.objects.last()
     preference = Preferencemodel.objects.filter(user=user).first()
     checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
-    print(checkout_time)
+    print(preference.bedspread)
     messages.success(request,"Reservation Created")
     context={'checkout_time':checkout_time,
              'user':user,'reservation':reservation,'payment':payment,
@@ -35,9 +35,9 @@ def reservation_id(request,id):
     reservation= ReservationModel.objects.get(id=id)
     payment_id = reservation.payment.pk
     payment = PaymentModel.objects.get(id=payment_id)
-    preference = Preferencemodel.objects.filter(user=user).first()
+    preference = Preferencemodel.objects.filter(user=user).last()
     checkout_time = reservation.checkInDateandTime  + datetime.timedelta(days=int(reservation.numberofdays))
-    print(checkout_time)
+    print(preference.bedspread)
     context={'checkout_time':checkout_time,
              'user':user,'reservation':reservation,'payment':payment,
              'preference':preference}
@@ -55,23 +55,31 @@ def reservation(request):
     print(rooms)
     status_context=''
     if request.method=='POST':
-        print(request.POST.get('free_rooms'))
         status = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
-        reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
-        reservation = reservation_list.last()
-        checkout_time = reservation.checkoutime()
+        print(request.POST.get('heater'))
         year = request.POST.get('checkInDateandTime').split('-')[0]
         month= request.POST.get('checkInDateandTime').split('-')[1]
         day = request.POST.get('checkInDateandTime').split('-')[2].split('T')[0]
-        print(checkout_time.day)
+        
         potential_checkin = request.POST.get('checkInDateandTime').split('-')[2].split('T')[0]         
-        if status.status=='Free' or int(potential_checkin) > checkout_time.day:
+        reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
+        reservation = reservation_list.last()
+        print(reservation)
+        if reservation is None:
+            print('Reservation is None')
             status_context='Free'
-            messages.success(request,f"{request.POST.get('free_rooms')} is Free on {day} of {month} {year}")
             if request.POST.get('determinant')=='Create':
                 room_booked = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
-                try:
-                    preferencemodel = Preferencemodel.objects.filter(user_id=user.pk).first()
+                preferencemodel_count = Preferencemodel.objects.filter(user_id=user.pk).count()
+            
+                if preferencemodel_count <= 0:
+
+                    preferencemodel = Preferencemodel.objects.create(user=user,
+                                                   lighting=request.POST.get('Lighting'),
+                                                   bedspread=request.POST.get('Bedspread'),
+                                                   heater=request.POST.get('heater'),
+                                                   airconditioner=request.POST.get('airconditioner'))
+                    preferencemodel.save()
                     payment=PaymentModel.objects.create(user=user,
                                         lastName=user.lastname,
                                         firstName=user.firstname,
@@ -81,6 +89,38 @@ def reservation(request):
                                         paymenttime = request.POST.get('checkInDateandTime'))
                     print(request.POST.get('checkInDateandTime'))
                     preference=Preferencemodel.objects.filter(user=user)
+                    reservation = ReservationModel.objects.create(
+                                                    user=user,
+                                                    room=request.POST.get('free_rooms'),
+                                                    payment=payment,
+                                                    numberofdays=request.POST.get('days_count'),
+                                                        checkInDateandTime= request.POST.get('checkInDateandTime'),
+                                                        preference = preferencemodel                                   
+                    )
+                    roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
+                    roommodel.status='Occupied'
+                    roommodel.save()
+                    messages.success(request,"Reservation Created")
+                    context={'free_rooms':free_rooms,'rooms':rooms,
+                    'preference':preference.first()}
+                    return redirect('success')
+                
+                else:
+                    preferencemodel = Preferencemodel.objects.filter(user=user)[0]
+                    preferencemodel.lighting = request.POST.get('Lighting'),
+                    preferencemodel.bedspread = request.POST.get('Bedspread'),
+                    preferencemodel.heater= request.POST.get('heater'),
+                    preferencemodel.airconditioner = request.POST.get('airconditioner'),
+                    
+                    payment=PaymentModel.objects.create(user=user,
+                                        lastName=user.lastname,
+                                        firstName=user.firstname,
+                                        reference_id='1234abc', # random number
+                                        amount=int(room_booked.price) * int(number_of_days_to_spend),
+                                        description=f" for {request.POST.get('free_rooms')}",
+                                        paymenttime = request.POST.get('checkInDateandTime'))
+                    print(request.POST.get('checkInDateandTime'))
+                    
                     reservation = ReservationModel.objects.create(
                                                     user=user,
                                                     payment=payment,
@@ -96,12 +136,29 @@ def reservation(request):
                     context={'free_rooms':free_rooms,'rooms':rooms,
                     'preference':preference.first()}
                     return redirect('success')
-                except:
+                        
+            if request.POST.get('determinant')=='Check':
+                messages.success(request,f"{request.POST.get('free_rooms')} is free on {day}/{month}/{year}")
+                context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
+                'preference':preference.first()}
+                return render(request, 'reservation.html', context)
+        else:
+            print("reservation is not None")
+            checkout_time = reservation.checkoutime()
+            if status.status=='Free' or int(potential_checkin) > checkout_time.day:
+                status_context='Free'
+                if request.POST.get('determinant')=='Create':
+                    room_booked = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
+                    preferencemodel_count = Preferencemodel.objects.filter(user_id=user.pk).count()
+                
+                    if preferencemodel_count <= 0:
+
                         preferencemodel = Preferencemodel.objects.create(user=user,
-                                                   lighting=request.POST.get('lighting'),
-                                                   bedspread=request.POST.get('bedspread'),
-                                                   heater=request.POST.get('heater'),
-                                                   airconditioner=request.POST.get('airconditioner'))
+                                                    lighting=request.POST.get('Lighting'),
+                                                    bedspread=request.POST.get('Bedspread'),
+                                                    heater=request.POST.get('heater'),
+                                                    airconditioner=request.POST.get('airconditioner'))
+                        
                         payment=PaymentModel.objects.create(user=user,
                                             lastName=user.lastname,
                                             firstName=user.firstname,
@@ -126,28 +183,63 @@ def reservation(request):
                         context={'free_rooms':free_rooms,'rooms':rooms,
                         'preference':preference.first()}
                         return redirect('success')
-            if request.POST.get('determinant')=='Check':
-                context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
-                'preference':preference.first()}
-                return render(request, 'reservation.html', context)
-        else:
-            reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
-            reservation = reservation_list.last()
-            checkout_time = reservation.checkoutime()            
-            
-            if datetime.datetime.now().day >= checkout_time.day:
-                room = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
-                room.status = 'Free'
-                room.save()
-                messages.success(request,f"{room} is Free")
-            else:
-                status_context='Occupied'
-                messages.success(request,f"""{request.POST.get('free_rooms')} is Occupied, would be free by
-                             {checkout_time.ctime()}""")
-                context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
+                    
+                    else:
+                        preferencemodel = Preferencemodel.objects.filter(user=user)[0]
+                        print(preferencemodel.lighting)
+                        preferencemodel.lighting = request.POST.get('Lighting'),
+                        preferencemodel.bedspread = request.POST.get('Bedspread'),
+                        preferencemodel.heater= request.POST.get('heater'),
+                        preferencemodel.airconditioner = request.POST.get('airconditioner')
+                        preferencemodel.save()
+                        payment=PaymentModel.objects.create(user=user,
+                                            lastName=user.lastname,
+                                            firstName=user.firstname,
+                                            reference_id='1234abc', # random number
+                                            amount=int(room_booked.price) * int(number_of_days_to_spend),
+                                            description=f" for {request.POST.get('free_rooms')}",
+                                            paymenttime = request.POST.get('checkInDateandTime'))
+                        print(request.POST.get('checkInDateandTime'))
+                        
+                        reservation = ReservationModel.objects.create(
+                                                        user=user,
+                                                        payment=payment,
+                                                        room=request.POST.get('free_rooms'),
+                                                        numberofdays=request.POST.get('days_count'),
+                                                            checkInDateandTime= request.POST.get('checkInDateandTime'),
+                                                            preference = preferencemodel                             
+                        )
+                        roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
+                        roommodel.status='Occupied'
+                        roommodel.save()
+                        messages.success(request,"Reservation Created")
+                        context={'free_rooms':free_rooms,'rooms':rooms,
+                        'preference':preference.first()}
+                        return redirect('success')
+                            
+                if request.POST.get('determinant')=='Check':
+                    messages.success(request,f"{request.POST.get('free_rooms')} is Free on {day} of {month} {year}")
+                    context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
                     'preference':preference.first()}
-                return render(request, 'reservation.html', context)
-        
+                    return render(request, 'reservation.html', context)
+            else:
+                reservation_list= ReservationModel.objects.filter(room=request.POST.get('free_rooms'))
+                reservation = reservation_list.last()
+                checkout_time = reservation.checkoutime()            
+                
+                if datetime.datetime.now().day >= checkout_time.day:
+                    room = RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
+                    room.status = 'Free'
+                    room.save()
+                    messages.success(request,f"{room} is Free")
+                else:
+                    status_context='Occupied'
+                    messages.success(request,f"""{request.POST.get('free_rooms')} is Occupied, would be free by
+                                {checkout_time.ctime()}""")
+                    context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
+                        'preference':preference.first()}
+                    return render(request, 'reservation.html', context)
+            
     context={'free_rooms':free_rooms,'rooms':rooms,'status_context':status_context,
              'preference':preference.first()}
     return render(request, 'reservation.html', context)
