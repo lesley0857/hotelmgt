@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 import datetime
+import random
 from django.contrib import messages
 from Customeruser.models import CustomBaseuser
 from guestpreferenceapp.models import Preferencemodel
@@ -46,6 +47,12 @@ def reservation_id(request,id):
 
 @login_required(login_url='login')
 def reservation(request):
+    a = random.randint(1,9)
+    b = random.randint(1,9)
+    c = random.randint(1,9)
+    d = random.randint(1,9)
+    e = random.randint(1,9)
+    f = random.randint(1,9)
     basic_user = request.user
     user = CustomBaseuser.objects.get(email=basic_user.email)
     free_rooms = RoomModel.objects.filter(status='Free')
@@ -83,7 +90,7 @@ def reservation(request):
                     payment=PaymentModel.objects.create(user=user,
                                         lastName=user.lastname,
                                         firstName=user.firstname,
-                                        reference_id='1234abc', # random number
+                                        reference_id=f'{a}{b}{c}{d}{e}{f}', # random number
                                         amount=int(room_booked.price) * int(number_of_days_to_spend),
                                         description=f" for {request.POST.get('free_rooms')}",
                                         paymenttime = request.POST.get('checkInDateandTime'))
@@ -115,7 +122,7 @@ def reservation(request):
                     payment=PaymentModel.objects.create(user=user,
                                         lastName=user.lastname,
                                         firstName=user.firstname,
-                                        reference_id='1234abc', # random number
+                                        reference_id=f'{a}{b}{c}{d}{e}{f}', # random number
                                         amount=int(room_booked.price) * int(number_of_days_to_spend),
                                         description=f" for {request.POST.get('free_rooms')}",
                                         paymenttime = request.POST.get('checkInDateandTime'))
@@ -153,7 +160,7 @@ def reservation(request):
                 
                     if preferencemodel_count <= 0:
 
-                        preferencemodel = Preferencemodel.objects.create(user=user,
+                        preferencemodel = Preferencemodel.objects.create(user_id=user.pk,
                                                     lighting=request.POST.get('Lighting'),
                                                     bedspread=request.POST.get('Bedspread'),
                                                     heater=request.POST.get('heater'),
@@ -162,7 +169,7 @@ def reservation(request):
                         payment=PaymentModel.objects.create(user=user,
                                             lastName=user.lastname,
                                             firstName=user.firstname,
-                                            reference_id='1234abc', # random number
+                                            reference_id=f'{a}{b}{c}{d}{e}{f}', # random number
                                             amount=int(room_booked.price) * int(number_of_days_to_spend),
                                             description=f" for {request.POST.get('free_rooms')}",
                                             paymenttime = request.POST.get('checkInDateandTime'))
@@ -186,9 +193,9 @@ def reservation(request):
                     
                     else:
                         preferencemodel = Preferencemodel.objects.filter(user=user).last()
-                        print(preferencemodel.lighting)
-                        preferencemodel.delete()
-                        preferencemodel.objects.create(user=user,
+                        print('more')
+                        # preferencemodel.delete()
+                        Preferencemodel.objects.update(
                                                     lighting=request.POST.get('Lighting'),
                                                     bedspread=request.POST.get('Bedspread'),
                                                     heater=request.POST.get('heater'),
@@ -197,7 +204,7 @@ def reservation(request):
                         payment=PaymentModel.objects.create(user=user,
                                             lastName=user.lastname,
                                             firstName=user.firstname,
-                                            reference_id='1234abc', # random number
+                                            reference_id=f'{a}{b}{c}{d}{e}{f}', # random number
                                             amount=int(room_booked.price) * int(number_of_days_to_spend),
                                             description=f" for {request.POST.get('free_rooms')}",
                                             paymenttime = request.POST.get('checkInDateandTime'))
@@ -211,6 +218,7 @@ def reservation(request):
                                                             checkInDateandTime= request.POST.get('checkInDateandTime'),
                                                             preference = preferencemodel                             
                         )
+                        reservation.save()
                         roommodel=RoomModel.objects.get(roomname=request.POST.get('free_rooms'))
                         roommodel.status='Occupied'
                         roommodel.save()
